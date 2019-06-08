@@ -1,0 +1,74 @@
+Este capítulo apresenta a metologia seguida para a verificação das hipóteses, incluindo o modelo construído e os \textit{datasets} utilizados. Os modelos foram construídos usando o \textit{framework} PyTorch~\cite{pytorch} e avaliados usando métricas visuais: \acrshort{PSNR}, \acrshort{SSIM} e \acrshort{MS-SSIM}. Também foi avaliada a quantidade de bits por pixel da imagem decodificada. O objetivo é balancear a taxa e distorção das imagens reconstruídas pelo modelo.
+
+\section{Bases de Dados}%
+Foram utilizadas, principalmente, cinco bases de dados para o treinamento do modelo proposto, construídas usando as imagens das seguintes bases de dados:
+\begin{enumerate}
+    \item \emph{\acrshort{CLIC}}~\cite{clic}. Deste \textit{dataset} foram pegos 4 conjuntos com os seguintes nomes e tamanhos:
+    \begin{enumerate}
+        \item Professional valid: 41 imagens;
+        \item Professional train: 585 imagens;
+        \item Mobile valid: 61 imagens;
+        \item Mobile train: 1048 imagens;
+    \end{enumerate}
+    \item \emph{\acrshort{DIV2K}}~\cite{div2k}. Deste \textit{dataset} foram pegos 2 conjuntos com os seguintes nomes e tamanhos:
+    \begin{enumerate}
+        \item Train: 800 imagens;
+        \item Valid: 100 imagens;
+    \end{enumerate}
+    \item \emph{\acrshort{EYE}}~\cite{ultra_eye}. Deste \textit{dataset} foram pegos 2 conjuntos com os seguintes nomes e tamanhos:
+    \begin{enumerate}
+        \item HD: 38 imagens;
+        \item UHD: 40 imagens;
+    \end{enumerate}
+\end{enumerate}
+Também foi utilizada a base~\cite{kodak} e o conjunto \textit{Mobile test} da base \acrshort{CLIC} para teste. Todas as imagens usadas são de alta qualidade (sem ruído, boa iluminação, alta nitidez), sendo que as imagens \textit{professional} possuem qualidade maior que as {mobile}. A base \acrshort{EYE} consiste de imagens naturais de alta qualidade e resolução adquiridas usando várias câmeras. As imagens cobrem uma quantidade variada de cenas, incluindo cenas ao ar livre e interiores, imagens da natureza, pessoas, animais e cenas históricas retratadas em pinturas. As imagens das bases \acrshort{DIV2K} e \acrshort{EYE} têm resolução maior que as do \acrshort{CLIC}, entretanto isso não faz muita diferença visto que são usados patches com 32 pixels de largura e altura na rede.
+
+Primeiramente, todas as imagens foram separadas em \textit{patches} com 32 pixels de largura e altura, resultando em 6,231,440 \textit{patches}. Cada imagem foi codificada sem perdas no formato \acrshort{PNG}, e o tamanho de cada arquivo é usado como critério para a entropia do \textit{patch} (\textit{patches} com tamanhos menores são considerados como sendo de ``baixa entropia''). O histograma da base de dados completa é mostrado na~\refFig{hist_all}.
+\figura[!htb]{hist_all}{Histograma da base de dados completa formada por 6,231,440 de patches}{hist_all}{width=\textwidth}
+Foram geradas cinco base de dados com cerca de 1.25 milhões de \textit{patches} em cada uma. Para cada base é pego um subconjunto do total de \textit{patches}. Dado $b(i)$, onde $i \in \{1,\dots,n\}, b(i) = \text{ número de ocorrências de patches com esse tamanho }$ e $n \in \mathbb{Z}$ é a quantidade total de \textit{bins} de modo que $\sum_{i=1}^{n}b(i) = 6231440$, (cada \textit{bin} é formado pela quantidade de ocorrências de \textit{patches} com aquele tamanho em \textit{bytes}), os \textit{bins} são ordenados de forma crescente usando o tamanho do arquivo (entropia) como critério. Em seguida, para cada base, é escolhido o menor inteiro $x$ de \textit{bins} tal que $\sum_{i=1}^{x}b(i) \geq 0.2\sum_{i=1}^{n}b(i)$. Por exemplo, a base de dados 0 é constituída dos primeiros $k$ \textit{bins} de \textit{patches}, pegos em ordem crescente, tal que $\sum_{i=1}^{k}b(i) \geq 6231440/5$, conforme mostra a~\refFig{hist0}.
+
+Cada base de dados tem características específicas e entendê-las é um fator essencial para avaliar o modelo proposto e o impacto de métodos e hiperparâmetros diferentes nos resultados. As bases, nomeadas $BDi,\, i \in \{0,\cdots,4\}$, possuem as seguintes características:
+\begin{itemize}
+    \item \textbf{BD0}: formada por 1248978 de \textit{patches} que pertencem ao grupo dos 20\% com menor entropia;
+    \item \textbf{BD1}: formada por 1251421 de \textit{patches} que pertencem ao grupo dos que estão na faixa 40\% à 60\% (porcentagem dada pelo \textit{patch} com maior entropia);
+    \item \textbf{BD2}: formada por 1248725 de \textit{patches} que pertencem ao grupo dos 20\% com maior entropia;
+    \item \textbf{BD3}: formada por 1247033 de \textit{patches} pegos de forma aleatória. Correspondem à 20\% do total.
+    \item \textbf{BD4}: formada por 1246698 de \textit{patches}. 20\% do total retirados aleatoriamente dos 50\% de \textit{patches} com maior entropia.
+\end{itemize}
+Por construção, não há sobreposição entre as bases de dado 0, 1 e 2, mas existe sobreposição destas bases com as bases 3 e 4. Um histograma de cada base~[\refFigs{hist0}{hist4}] é dado.
+\figura[!htb]{hist0}{Histograma da \textbf{BD0}}{hist0}{width=\textwidth}
+\figura[!htb]{hist1}{Histograma da \textbf{BD1}}{hist1}{width=\textwidth}
+\figura[!htb]{hist2}{Histograma da \textbf{BD2}}{hist2}{width=\textwidth}
+\figura[!htb]{hist3}{Histograma da \textbf{BD3}}{hist3}{width=\textwidth}
+\figura[!htb]{hist4}{Histograma da \textbf{BD4}}{hist4}{width=\textwidth}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% O binarizador $B$ proposto neste trabalho difere do \textit{Toderici} em questão de implementação (explicado na % subseção~\ref{variablerate}) na função de binarização $b$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modelos desenvolvidos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Foi utilizada uma função de binarização $\hat{b}(x) \in \{-1, 1\}$. Aqui as probabilidades, denotadas por $p$, foram obtidas a partir de uma distribuição uniforme no intervalo $[0, 1]$. $\hat{b}(x)$ é definida como: 
+\equacao{bin_uniforme}{\hat{b}(x) = 
+\begin{cases}
+1,\, \text{ se } \frac{1-x}{2} \leq p,\\
+-1,\, \text{ caso contrário.}\\
+\end{cases}}
+% Em tempo de teste é utilizada a seguinte função: \equacao{b_inf2}{\hat{b}^{inf}(x) = \begin{cases}
+% -1,\, \text{ se } x < 0,\\
+% 0,\, \text{ se } x = 0,\\
+% 1,\, \text{ caso contrário.}\\
+% \end{cases}}
+Foram desenvolvidos três \textit{autoencoders} convolucionais com o objetivo de avaliar o potencial de cada um nas bases de dados utilizadas. O primeiro não possui binarização/quantização no latente gerado pelo \textit{encoder}. O segundo incorpora o binarizador (representado com um trapézio nas figuras) baseado no do \textit{Toderici} usando $\hat{b}(x)$. O último é a arquitetura proposta por \textit{Toderici} em~\cite{toderici2015variable} com a utilização de $\hat{b}(x)$. Nas seguintes subseções são apresentadas as ilustrações das arquiteturas utilizadas. Os retângulos indicam as convoluções e os retângulos arredondados indicam as convoluções transpostas. O tamanho do \textit{kernel} $w$ é indicado na primeira linha do retângulo. A segunda linha informa o número de filtros (canais de saídas). A última linha indica o tamanho (igual nas duas direções) do \textit{stride} utilizado e a função de ativação. A última camada do \textit{decoder} (convolução transposta) de cada um dos modelos é usada para recuperar a informação de cor.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modelo 1}
+\label{cap3:mod1}
+Este primeiro modelo foi desenvolvido com o objetivo de avaliar o potencial de um \textit{autoencoder} convolucional simples sem camada de gargalo com binarizador/quantizador. Aqui, o armazenamento da imagem codificada pelo \textit{encoder} seria custoso, visto que não há binarização. Portanto, o objetivo é apenas avaliar a distorção das imagens reconstruídas. A arquitetura é ilustrada na~\refFig{conv_ae}.
+\figura[!htb]{conv_ae}{Ilustração do \textit{autoencoder} mais básico desenvolvido}{conv_ae}{width=\textwidth}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modelo 2}
+\label{cap3:mod2}
+O segundo modelo adiciona o binarizador na camada de gargalo, o que força o \textit{encoder} à comprimir informação visto que será gerada uma saída inteira discreta no conjunto $\{-1, 1\}$ a partir da entrada real contínua. Há uma grande perda de informação em troca de ganho em espaço, pois cada valor pode ser salvo usando apenas um bit agora. Nesta arquitetura~[\refFig{conv_ae_bin}] a taxa \emph{nominal} de bits por pixel é $\dfrac{8\cdot8\cdot128}{32\cdot32} = 8$. 
+\figura[!htb]{conv_ae_bin}{Ilustração do segundo modelo desenvolvido} {conv_ae_bin}{width=\textwidth}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modelo 3}
+\label{cap3:mod3}
+O terceiro modelo~[\refFig{toderici_model}] segue a arquitetura proposta pelo \textit{Toderici} em~\cite{toderici2015variable}. Possui mais camadas em comparação com os outros dois modelos propostos aqui, e uma taxa nominal de $\dfrac{8\cdot8\cdot32}{32\cdot32} = 2$ bits por pixel, visto que é aplicada uma convolução de tamanho 1 por 1 com 32 filtros antes da função de ativação tangente hiperbólica ser aplicada.
+\figura[!htb]{toderici_model}{Ilustração do terceiro modelo desenvolvido}{toderici_model}{width=\textwidth}
