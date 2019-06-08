@@ -1,0 +1,40 @@
+Este capítulo mostra o que se alcançou com os objetivos. É feita uma análise crítica na seção~\ref{sec:analise} para verificar a completude dos objetivos propostos pelo trabalho. A seção~\ref{sec:futuro} indica as perspectivas futuras e os próximos passos a serem dados. A seção~\ref{sec:limitacoes} aborda as limitações enfrentadas durante o desenvolvimento do trabalho.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Limitações do Trabalho}
+\label{sec:limitacoes}
+Modelos baseados em redes neurais para compressão de imagens precisam de muitas imagens para serem treinadas e possuem custo computacional superior aos codecs clássicos para codificar e decodificar imagens. Métodos baseados em redes neurais possuem o potencial de suprir uma necessidade crescente por algoritmos de compressão com perdas flexíveis. Entretanto, compressão com perdas é uma problema não diferenciável. Em particular, quantização é uma parte integral do \textit{pipeline} de compressão mas não é diferenciável, o que dificulta o trabalho de treinar redes neurais para esta tarefa.
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Análise Crítica}
+\label{sec:analise}
+Neste trabalho, não foi proposto um novo método para comprimir imagens mas foram replicadas técnicas já existentes na literatura alcançando resultados razoáveis para um trabalho que tinha como principal objetivo se familiarizar com a literatura e propostas existentes. No entanto, foi detectado uma necessidade de usar outros tipos de modelos para que seja possível superar os \textit{codecs} clássicos no âmbito do tema deste trabalho. Esta necessidade é abordada na seção~\ref{sec:futuro}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Trabalhos Futuros}
+\label{sec:futuro}
+Ainda há muito espaço para novas soluções no âmbito do problema abordado, portanto foram definidas algumas atividades chaves para dar sequência ao trabalho. Segue um cronograma em formato de Diagrama de Gantt que organiza as atividades do próximo semestre letivo.
+
+\begin{center}
+\begin{ganttchart}[y unit title=0.6cm,
+    y unit chart=1cm,
+    vgrid,hgrid,
+    title height=1,
+    bar/.style={draw,fill=cyan},
+    bar incomplete/.append style={fill=yellow!50},
+    bar height=0.7]{1}{17}
+    \gantttitle{Semanas}{17} \\
+    \gantttitlelist{1,...,17}{1} \\
+    \ganttbar{Estudar literatura}{1}{16} \\
+    \ganttbar{Implementar novo modelo}{3}{7} \\
+    \ganttbar{Melhorar novo modelo}{7}{12} \\
+    \ganttbar{Fazer testes}{6}{15} \\
+    \ganttbar{Escrever Monografia}{10}{17} \\
+    % \ganttbar[progress=40]{Fazer testes}{13}{14} \\
+    % relaçoẽs
+    %\ganttlink{elem0}{elem1}
+    \ganttlink{elem1}{elem2}
+    \ganttlink{elem2}{elem3}
+    \ganttlink{elem3}{elem2}
+    \ganttlink{elem3}{elem4}
+    \node[fill=white,draw] at ([yshift=-40pt, xshift=+68pt]current bounding box.south){Diagrama de Gantt};
+\end{ganttchart}   
+\end{center}

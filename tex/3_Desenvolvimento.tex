@@ -1,0 +1,49 @@
+Este capítulo apresenta a metologia seguida para a verificação das hipóteses, incluindo o modelo construído e os \textit{datasets} utilizados.
+\section{Bases de Dados}%
+Foram utilizadas seis bases de dados para o treinamento do modelo proposto, construídas usando as imagens das seguintes bases de dados:
+\begin{enumerate}
+    \item \emph{Challenge on Learned Image Compression (CLIC)}~\cite{clic}
+    \begin{enumerate}
+        \item Professional valid: 41 imagens;
+        \item Professional train: 585 imagens;
+        \item Mobile valid: 61 imagens;
+        \item Mobile train: 1048 imagens;
+    \end{enumerate}
+    \item \emph{Diverse 2k high resolution quality images (DIV2K)}~\cite{div2k}
+    \begin{enumerate}
+        \item Train: 800 imagens;
+        \item Valid: 100 imagens;
+    \end{enumerate}
+    \item \emph{UHD and HD images eye tracking dataset (EYE)}~\cite{ultra_eye}
+    \begin{enumerate}
+        \item HD: 38 imagens;
+        \item UHD: 40 imagens;
+    \end{enumerate}
+\end{enumerate}
+Todas as imagens usadas são de alta qualidade (sem ruído, boa iluminação, alta nitidez), sendo que as imagens \textit{professional} possuem qualidade maior que as {mobile}. A base \textit{EYE} consiste de imagens naturais de alta qualidade e resolução adquiridas usando várias câmeras. As imagens cobrem uma quantidade variada de cenas, incluindo cenas ao ar livre e interiores, imagens da natureza, pessoas, animais e cenas históricas retratadas em pinturas. As imagens das bases \textit{DIV2K} e \textit{EYE} têm resolução maior que as do \textit{CLIC}, entretanto isso não faz muita diferença visto que são usados patches com 32 pixels de largura e altura na rede.
+
+Primeiramente, todas as imagens foram separadas em \textit{patches} com 32 pixels de largura e altura, resultando em 6,231,440 \textit{patches}. Cada imagem foi codificada sem perdas no formato \textit{PNG}, e o tamanho de cada arquivo é usado como critério para a entropia do \textit{patch} (\textit{patches} com tamanhos menores são considerados como sendo de ``baixa entropia''). O histograma da base de dados completa é mostrado na~\refFig{hist_all}.
+\figura[!htb]{hist_all}{Histograma da base de dados completa formada por 6,231,440 de patches}{hist_all}{width=0.9\textwidth}
+Foram geradas cinco base de dados com cerca de 1.25 milhões de \textit{patches} em cada uma. Para cada base é pego um subconjunto do total de \textit{patches}. Dado $b(i)$, onde $i \in \{1,\dots,n\}, b(i) = \text{ número de ocorrências de patches com esse tamanho }$ e $n \in \mathbb{Z}$ é a quantidade total de \textit{bins} de modo que $\sum_{i=1}^{n}b(i) = 6231440$, (cada \textit{bin} é formado pela quantidade de ocorrências de \textit{patches} com aquele tamanho em \textit{bytes}), os \textit{bins} são ordenados de forma crescente usando o tamanho do arquivo (entropia) como critério. Em seguida, para cada base, é escolhido o menor inteiro $x$ de \textit{bins} tal que $\sum_{i=1}^{x}b(i) \geq 0.2\sum_{i=1}^{n}b(i)$. Por exemplo, a base de dados 0 é constituída dos primeiros $k$ \textit{bins} de \textit{patches}, pegos em ordem crescente, tal que $\sum_{i=1}^{k}b(i) \geq 0.2\sum_{i=1}^{n}b(i)$, conforme mostra a~\refFig{hist_0}.
+
+Cada base de dados tem características específicas e entendê-las é um fator essencial para avaliar o modelo proposto e o impacto de métodos e hiperparâmetros diferentes nos resultados. As bases seguem as seguintes regras:
+\begin{itemize}
+    \item Base dados 0: formada por 1,248,978 de \textit{patches} que pertencem ao grupo dos 20\% com menor entropia;
+    \item Base dados 1: formada por 1,251,421 de \textit{patches} que pertencem ao grupo dos que estão na faixa 40\% à 60\% (porcentagem dada pelo \textit{patch} com maior entropia);
+    \item Base dados 2: formada por 1,248,725 de \textit{patches} que pertencem ao grupo dos 20\% com maior entropia;
+    \item Base dados 3: formada por 1,247,033 de \textit{patches} pegos de forma aleatória. Correspondem à 20\% do total.
+    \item Base dados 4: formada por 1,246,698 de \textit{patches}. 20\% do total retirados dos 50\% de \textit{bin} de \textit{patches} com maior entropia.
+\end{itemize}
+Por construção, não há sobreposição entre as bases de dado 0, 1 e 2, mas existe sobreposição destas bases com as bases 3 e 4. Um histograma de cada base é dado.
+\figura[!htb]{hist_0}{Histograma da base de dados 0}{hist_0}{width=0.6\textwidth}
+\figura[!htb]{hist_1}{Histograma da base de dados 1}{hist_1}{width=0.6\textwidth}
+\figura[!htb]{hist_2}{Histograma da base de dados 2}{hist_2}{width=0.6\textwidth}
+\figura[!htb]{hist_3}{Histograma da base de dados 3}{hist_3}{width=0.6\textwidth}
+\figura[!htb]{hist_4}{Histograma da base de dados 4}{hist_4}{width=0.6\textwidth}
+\section{Modelos desenvolvidos}
+Foram desenvolvidos três \textit{autoencoders} convolucionais com o objetivo de avaliar o seu potencial nas bases de dados utilizadas. O primeiro não possui binarização/quantização no latente gerado pelo \textit{encoder}. O segundo é uma versão diferente do binarizador proposto por \textit{Toderici} explicado na subseção~\ref{variablerate}. O último é a arquitetura proposta por \textit{Toderici} em~\cite{toderici2015variable}. Os modelos desenvolvidos 
+\subsection{Modelo 1}
+Este primeiro modelo foi desenvolvido com o objetivo de avaliar o potencial de um \textit{autoencoder} convolucional simples sem camada de gargalo com binarizador/quantizador. Foram realizados vários testes nas bases de dados construídas e na base \textit{CLIC} apresentados no próximo capítulo. 
+\subsection{Modelo 2}
+
+\subsection{Modelo 3}
