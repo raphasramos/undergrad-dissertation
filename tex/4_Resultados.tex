@@ -53,7 +53,7 @@ Para o Modelo 2~[\refFig{conv_ae_bin}], foram feitos testes nas bases \textbf{\a
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelo 3}
 \label{res:mod3}
-Para o Modelo 3~[\refFig{toderici_model}], foram feitos testes nas bases \textbf{\acrshort{CLIC} Mobile}, \textbf{BD0}, \textbf{BD1}, \textbf{BD2}, \textbf{BD3}, \textbf{BD4} e \textbf{Kodak}. Os resultados são apresentados na~\refTab{tab:mod3}.
+Para o Modelo 3~[\refFig{toderici_model}], foram feitos testes nas bases \textbf{\acrshort{CLIC} Mobile}, \textbf{BD0}, \textbf{BD1}, \textbf{BD2}, \textbf{BD3}, \textbf{BD4} e \textbf{Kodak}. Os resultados são apresentados na~\refTab{tab:mod3}. Uma comparação com o \textit{JPEG} para diferentes taxas e métricas de distorção é apresentada na~\refFigs{plots_psnr}{plots_ssim}.
 
 \tabela{Tabela contendo os resultados do Modelo 3}{tab:mod3}{|l|l|l|l|l|}{\hline
 \textbf{Bases}                                                                   & \textbf{BPP} & \textbf{PSNR} & \textbf{SSIM} & \textbf{MS-SSIM} \\ \hline
@@ -64,5 +64,8 @@ Para o Modelo 3~[\refFig{toderici_model}], foram feitos testes nas bases \textbf
 \textbf{BD2}                                                                     & 2            & 27.53         & 0.91          & 0.97            \\ \hline
 \textbf{BD3}                                                                     & 2            & 33.27         & 0.91          & 0.97            \\ \hline
 \textbf{BD4}                                                                     & 2            & 30.16         & 0.90          & 0.97            \\ \hline}
+
+\figura[!htb]{plots_ssim}{Comparação do Modelo 3 com o JPEG na métrica \acrshort{PSNR} à diferentes taxas}{plots_ssim}{width=\textwidth}
+\figura[!htb]{plots_psnr}{Comparação do Modelo 3 com o JPEG na métrica \acrshort{SSIM} à diferentes taxas}{plots_psnr}{width=\textwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
