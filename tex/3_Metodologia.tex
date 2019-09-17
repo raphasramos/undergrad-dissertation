@@ -51,9 +51,11 @@ Por construção, não há sobreposição entre as bases de dado 0, 1 e 2, mas e
 % 1,\, \text{ se } \frac{1-x}{2} \leq p,\\
 % -1,\, \text{ caso contrário.}\\
 % \end{cases}}
-Foram testados \textit{autoencoders} convolucionais com o objetivo de avaliar o potencial de cada um nas bases de dados utilizadas. O primeiro não possui binarização/quantização no latente gerado pelo \textit{encoder}. O segundo incorpora o binarizador (representado com um trapézio nas figuras) baseado no do \textit{Toderici} usando $\hat{b}(x)$. O últimos são os modelos convolucionais recursivos e não recursivos propostos por \textit{Toderici} em~\cite{Variable2016Toderici} com a utilização de $\hat{b}(x)$.
+Foram testados \textit{autoencoders} convolucionais com o objetivo de avaliar o potencial de cada um nas bases de dados utilizadas. O primeiro não possui binarização/quantização no latente gerado pelo \textit{encoder}. O segundo incorpora o binarizador (representado com um trapézio nas figuras) baseado no do \textit{Toderici} usando $\hat{b}(x)$. O últimos são os modelos convolucionais recursivos e não recursivos propostos por \textit{Toderici} em~\cite{Variable2016Toderici} com a utilização de $\hat{b}(x)$. 
 
-Nas seguintes subseções são apresentadas as ilustrações das arquiteturas utilizadas. Os retângulos indicam as convoluções e os retângulos arredondados indicam as convoluções transpostas. O tamanho do \textit{kernel} $w$ é indicado na primeira linha do retângulo. A segunda linha informa o número de filtros (canais de saídas). A última linha indica o tamanho (igual nas duas direções) do \textit{stride} utilizado e a função de ativação. A última camada do \textit{decoder} (convolução transposta) de cada um dos modelos é usada para recuperar a informação de cor.
+Para os modelos que usam mais de 1 nível de resíduo, a taxa nominal é acrescida de 0.125 bits por pixel para cada nível. Com o uso do \textit{gzip} reduz-se a taxa nominal para cada nível em cerca de 20\%.
+
+Nas seguintes subseções são apresentadas as ilustrações de algumas arquiteturas utilizadas. Os retângulos indicam as convoluções e os retângulos arredondados indicam as convoluções transpostas. O tamanho do \textit{kernel} $w$ é indicado na primeira linha do retângulo. A segunda linha informa o número de filtros (canais de saídas). A última linha indica o tamanho (igual nas duas direções) do \textit{stride} utilizado e a função de ativação. A última camada do \textit{decoder} (convolução transposta) de cada um dos modelos é usada para recuperar a informação de cor.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modelo 1}
 \label{cap3:mod1}
