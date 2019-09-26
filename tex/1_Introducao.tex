@@ -37,10 +37,11 @@ Compressão de imagens usando redes neurais tem sido uma área ativa de pesquisa
 \begin{itemize}
     \item Deseja-se verificar se modelos baseados em \textit{autoencoders} convolucionais são competitivos com os clássicos codecs \textit{JPEG} e \textit{JPEG2000} para imagens com alto conteúdo de alta frequência;
     \item Deseja-se verificar se usar imagens que codificadores clássicos têm dificuldade para comprimir para treinamento do modelo é benéfico para os resultados dele;
-    \item Deseja-se verificar se o modelo recorrente é melhor que o modelo não recorrente para a tarefa de compressão de imagens.
+    \item Deseja-se verificar se o modelo recursivo é melhor que o modelo não recursivo para a tarefa de compressão de imagens;
+    \item Deseja-se verificar se os resultados dos \textit{autoencoders} serão melhores ao trabalhar com um diferente domínio para os dados de entrada, um que beneficie o processo de aprendizagem via atualização de gradientes. Ou seja, se é benéfico para o desempenho do modelo aplicar uma transformação nos dados de entrada que evite problemas como gradientes muito pequenos.
 \end{itemize}
 
-Estas verificações serão dadas usando-se métricas visuais objetivas e baixas taxas de bits por pixel, de modo a considerar o balanceamento entre taxa e distorção.
+Estas verificações serão dadas usando-se métricas visuais objetivas e as imagens serão trabalhadas à baixas taxas de bits por pixel.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Objetivos}
 \label{sec:objetivos}
