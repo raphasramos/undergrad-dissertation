@@ -1,4 +1,4 @@
-Este capítulo apresenta a metologia seguida para a verificação das hipóteses, incluindo o modelo construído e os \textit{datasets} utilizados. Os modelos foram construídos usando o \textit{framework} PyTorch~\cite{pytorch} e avaliados usando métricas visuais: \acrshort{PSNR}, \acrshort{SSIM} e \acrshort{MS-SSIM}. Também foi avaliada a quantidade de bits por pixel da imagem decodificada. O objetivo é balancear a taxa (bits por pixel) e distorção das imagens reconstruídas pelo modelo.
+Este capítulo apresenta a metologia seguida para a verificação das hipóteses, incluindo o modelo construído e os \textit{datasets} utilizados. Os modelos foram construídos usando o \textit{framework} PyTorch~\cite{pytorch} e avaliados usando métricas visuais: \acrshort{PSNR}, \acrshort{SSIM} e \acrshort{MS-SSIM}. Também foi avaliada a quantidade de bits por pixel da imagem decodificada.
 
 \section{Bases de Dados}%
 Foram utilizadas, principalmente, cinco bases de dados para o treinamento do modelo proposto, construídas usando as imagens das seguintes bases de dados:
@@ -45,15 +45,18 @@ Por construção, não há sobreposição entre as bases de dado 0, 1 e 2, mas e
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelos desenvolvidos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Foi utilizada uma função de binarização $\hat{b}(x) \in \{-1, 1\}$. Aqui as probabilidades, denotadas por $p$, foram obtidas a partir de uma distribuição uniforme no intervalo $[0, 1]$. $\hat{b}(x)$ é definida como: 
-% \equacao{bin_uniforme}{\hat{b}(x) = 
-% \begin{cases}
-% 1,\, \text{ se } \frac{1-x}{2} \leq p,\\
-% -1,\, \text{ caso contrário.}\\
-% \end{cases}}
-Foram testados \textit{autoencoders} convolucionais com o objetivo de avaliar o potencial de cada um nas bases de dados utilizadas. O primeiro não possui binarização/quantização no latente gerado pelo \textit{encoder}. O segundo incorpora o binarizador (representado com um trapézio nas figuras) baseado no do \textit{Toderici} usando $\hat{b}(x)$. O últimos são os modelos convolucionais recursivos e não recursivos propostos por \textit{Toderici} em~\cite{Variable2016Toderici} com a utilização de $\hat{b}(x)$. 
+Foram testados \textit{autoencoders} convolucionais com o objetivo de avaliar o potencial de cada um nas bases de dados propostas. O primeiro não possui binarização/quantização no latente gerado pelo \textit{encoder}. O segundo incorpora o binarizador (representado com um trapézio nas figuras) baseado no do \textit{Toderici} usando $\hat{b}(x)$. O últimos são os modelos convolucionais recursivos e não recursivos propostos por \textit{Toderici} em~\cite{Variable2016Toderici} com a utilização de $\hat{b}(x)$ e de um codificador de entropia, de modo que se alguma redundância ainda for encontrada no latente a lógica é que o codificador irá explorá-la de alguma forma, reduzindo o tamanho do \textit{bitstream} comprimido. O Modelo 3 e o 5 correspondem ao modelo não recursivo convolucional e o 4 é o modelo recursivo convolucional usando LSTM.
 
-Para os modelos que usam mais de 1 nível de resíduo, a taxa nominal é acrescida de 0.125 bits por pixel para cada nível. Com o uso do \textit{gzip} reduz-se a taxa nominal para cada nível em cerca de 20\%.
+Pode-se pensar que estes últimos modelos realizam o trabalho de transformação e quantização, empacotando e descartando informação, e que o codificador de entropia irá finalizar o trabalho, explorando alguma redundância ainda não explorada.
+
+\subsection{Formando o Bitstream}
+É importante descrever como o \textit{bitstream} é formado quando se aplica o binarizador $B$. Em todos os modelos, a imagem é dividida em \textit{patches} de tamanho 32x32 \textit{pixels}. Assim, se uma imagem possuir 9 \textit{patches}, ela terá um \textit{bitstream} para cada latente de cada \textit{patch} e o \textit{bitstream} da imagem será dado pela concatenação dos \textit{bitstreams} de cada patch. 
+
+Para cada um desses \textit{patches}, o modelo é treinado de maneira residual conforme explicado no capítulo anterior. Para os modelos que usam mais de 1 nível de resíduo, a taxa nominal é acrescida de 0.125 bits por pixel para cada nível. 
+
+Os latentes são concatenados de modo que para o nível $n$ tem-se $n$ latentes binarizados concatenados. Assim, para o nível 1 tem-se o \textit{bitstream} $b_1$ correspondente ao latente binarizado do nível 1, para o nível 2 tem-se o \textit{bitstream} $b_1 + b_2$, e assim em diante. De maneira geral, para o nível $n$ tem-se $b_1 + b_2 + \dots + b_n$, onde $+$ denota a concatenação de \textit{bitstreams}. 
+
+Para os últimos três modelos foi usado o \textit{gzip} (codificador de entropia) no latente com o objetivo de reduzir a taxa de bits por pixel.
 
 Nas seguintes subseções são apresentadas as ilustrações de algumas arquiteturas utilizadas. Os retângulos indicam as convoluções e os retângulos arredondados indicam as convoluções transpostas. O tamanho do \textit{kernel} $w$ é indicado na primeira linha do retângulo. A segunda linha informa o número de filtros (canais de saídas). A última linha indica o tamanho (igual nas duas direções) do \textit{stride} utilizado e a função de ativação. A última camada do \textit{decoder} (convolução transposta) de cada um dos modelos é usada para recuperar a informação de cor.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

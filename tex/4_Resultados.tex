@@ -1,10 +1,10 @@
-Foram realizados vários experimentos com os modelos apresentados no capítulo anterior e com o \textit{JPEG} e \textit{JPEG2000} com o objetivo de avaliar o potencial de cada um deles nas bases de dados propostas. Os \textit{patches} usados em todos os experimentos realizados neste capítulo possuem 32 pixels de largura e altura. Para os testes em que o conjunto de treino e de teste são a mesma base, foram gerados dois subconjuntos disjuntos: um para treino e um para teste. Este último possui cerca de 10\% do tamanho total e, evidentemente, não faz parte do conjunto de treino. Os resultados do \textbf{JPEG} nas bases de teste utilizadas são apresentados na seção~\ref{res:jpeg} e os resultados dos modelos apresentados no capítulo anterior são apresentados nas seções~\ref{res:mod1}, \ref{res:mod2}, \ref{res:mod3}, \ref{res:mod4} e \ref{res:mod5}. Os três primeiros modelos apresentados possuem um único nível de resíduo.
+Foram realizados vários experimentos com os modelos apresentados no capítulo anterior e com o \textit{JPEG} e \textit{JPEG2000} com o objetivo de avaliar o potencial de cada um deles nas bases de dados propostas. Os \textit{patches} usados em todos os experimentos realizados neste capítulo possuem 32 pixels de largura e altura. Para os testes em que o conjunto de treino e de teste são a mesma base, foram gerados dois subconjuntos disjuntos: um para treino e um para teste. Este último possui cerca de 10\% do tamanho total e, evidentemente, não faz parte do conjunto de treino. Os resultados do \textbf{JPEG} nas bases de teste utilizadas são apresentados na seção~\ref{res:jpeg} e os resultados dos modelos apresentados no capítulo anterior são apresentados nas seções~\ref{res:mod1}, \ref{res:mod2}, \ref{res:mod3}, \ref{res:mod4} e \ref{res:mod5}. Os três primeiros modelos apresentados possuem um único nível de resíduo. Todas as taxas estão em bits por pixel.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{JPEG}
 Nesta seção é apresentado o desempenho obtido pelo \textbf{JPEG} nas bases de teste. 
 \label{res:jpeg}
 \tabela{Tabela contendo médias obtidas pelo \textbf{JPEG} em cada uma das bases de teste utilizadas}{tab1:jpeg}{|l|l|l|l|l|l|}{\hline
-\textbf{Bases}                                                                   & \textbf{\acrshort{BPP}} & \textbf{PSNR} & \textbf{SSIM} & \textbf{MSSIM} & \textbf{Quality} \\ \hline
+\textbf{Bases}                                                                   & \textbf{Taxa} & \textbf{PSNR} & \textbf{SSIM} & \textbf{MSSIM} & \textbf{Quality} \\ \hline
 \textbf{\begin{tabular}[c]{@{}l@{}}CLIC Mobile test\\ (patches 32)\end{tabular}} & 8            & 44.23         & 0.98          & 0.99           & 94.06            \\ \hline
 \textbf{CLIC Mobile test}                                                        & 2            & 39.58         & 0.96          & 0.99           & 88.69            \\ \hline
 \textbf{Kodak}                                                                   & 2            & 36.77         & 0.95          & 0.99           & 85.91            \\ \hline
@@ -49,14 +49,14 @@ Para o Modelo 2~[\refFig{conv_ae_bin}], foram feitos testes nas bases \textbf{\a
 \textbf{CLIC Mobile test}                                                       & 8            & 35.03         & 0.94          & 0.98           & 30              \\ \hline
 \textbf{BD1}                                                               & 8            & 35.26         & 0.93          & 0.98           & 30              \\ \hline
 \textbf{BD2}                                                               & 8            & 29.10         & 0.95          & 0.98           & 30              \\ \hline}
-\figura[!htb]{patch}{Imagem original (esquerda) e \textit{patch} reconstruído pelo Modelo 2 (direita)}{patch}{width=\textwidth}
+\figura[!htbp]{patch}{Imagem original (esquerda) e \textit{patch} reconstruído pelo Modelo 2 (direita)}{patch}{width=\textwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelo 3}
 \label{res:mod3}
-Para o Modelo 3~[\refFig{toderici_model}], foram feitos testes nas bases \textbf{\acrshort{CLIC} Mobile}, \textbf{BD0}, \textbf{BD1}, \textbf{BD2}, \textbf{BD3}, \textbf{BD4} e \textbf{Kodak}. Os resultados são apresentados na~\refTab{tab:mod3}. Uma comparação com o \textit{JPEG} para diferentes taxas e métricas de distorção é apresentada na~\refFigs{plots_psnr}{plots_ssim}. Este modelo possui um único nível de resíduo.
+Para o Modelo 3, foram feitos testes nas bases \textbf{\acrshort{CLIC} Mobile}, \textbf{BD0}, \textbf{BD1}, \textbf{BD2}, \textbf{BD3}, \textbf{BD4} e \textbf{Kodak}. Os resultados são apresentados na~\refTab{tab:mod3}. Uma comparação com o \textit{JPEG} para diferentes taxas e métricas de distorção é apresentada na~\refFigs{plots_psnr}{plots_ssim}. Este modelo possui um único nível de resíduo.
 
 \tabela{Tabela contendo os resultados do Modelo 3}{tab:mod3}{|l|l|l|l|l|}{\hline
-\textbf{Bases}                                                                   & \textbf{\acrshort{BPP}} & \textbf{PSNR} & \textbf{SSIM} & \textbf{MS-SSIM} \\ \hline
+\textbf{Bases}                                                                   & \textbf{Taxa} & \textbf{PSNR} & \textbf{SSIM} & \textbf{MS-SSIM} \\ \hline
 \textbf{\begin{tabular}[c]{@{}l@{}}CLIC Mobile test\\ (patches 32)\end{tabular}} & 2            & 33.75         & 0.92          & 0.97            \\ \hline
 \textbf{\begin{tabular}[c]{@{}l@{}}Kodak\\ (patches 32)\end{tabular}}            & 2            & 31.46         & 0.88          & 0.96            \\ \hline
 \textbf{BD0}                                                                     & 2            & 40.24         & 0.97          & 0.99            \\ \hline
@@ -65,74 +65,142 @@ Para o Modelo 3~[\refFig{toderici_model}], foram feitos testes nas bases \textbf
 \textbf{BD3}                                                                     & 2            & 33.27         & 0.91          & 0.97            \\ \hline
 \textbf{BD4}                                                                     & 2            & 30.16         & 0.90          & 0.97            \\ \hline}
 
-\figura[!htb]{plots_ssim}{Comparação do Modelo 3 com o JPEG na métrica \acrshort{PSNR} em diferentes taxas}{plots_ssim}{width=0.7\textwidth}
-\figura[!htb]{plots_psnr}{Comparação do Modelo 3 com o JPEG na métrica \acrshort{SSIM} em diferentes taxas}{plots_psnr}{width=0.7\textwidth}
+\figura[!htbp]{plots_ssim}{Comparação do Modelo 3 com o JPEG na métrica \acrshort{PSNR} em diferentes taxas}{plots_ssim}{width=0.7\textwidth}
+\figura[!htbp]{plots_psnr}{Comparação do Modelo 3 com o JPEG na métrica \acrshort{SSIM} em diferentes taxas}{plots_psnr}{width=0.7\textwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelo 4}
 \label{res:mod4}
-Para este modelo foram usadas as bases \textbf{BD2}, \textbf{BD3} e \textbf{BD4} como treino e Kodak~\cite{kodak} para teste. O modelo possui 10 níveis de resíduos e foi treinado por 500 mil iterações. Para o JPEG e JPEG2000 são utilizados a melhor aproximação possível da \acrshort{BPP} obtida pela rede (network), ou seja, a melhor \textit{quality} que se adequa à \acrshort{BPP} desejada.
+Para este modelo foram usadas as bases \textbf{BD2}, \textbf{BD3} e \textbf{BD4} como treino. O modelo foi testado em duas bases: Kodak~\cite{kodak} e~\cite{clic}. O modelo possui 10 níveis de resíduos e foi treinado por 500 mil iterações. Os resultados referentes à base Kodak, são mostrados nas~\refFigs{_mean_plot_psnr_10levels}{_mean_plot_msssim_10levels} e sumarizados nas~\refTabs{tab:mod4_psnr}{tab:mod4_ssim}. Os resultados referentes às 47 imagens com muito conteúdo de alta frequência são mostrados nas~\refFigs{_mean_plot_psnr_hf_10levels}{_mean_plot_msssim_hf_10levels} e sumarizados nas~\refTabs{tab:mod4_hf_psnr}{tab:mod4_hf_msssim}.
 
-\tabela{Tabela contendo os valores da \acrshort{BPP} e PSNR (\acrshort{BPP}, PSNR) do Modelo 4, JPEG e JPEG2000}{tab:mod4_psnr}{|l|l|l|l|}{\hline
-\textbf{Nível} & \textbf{Network} & \textbf{JPEG} & \textbf{JPEG2K} \\ \hline
-\textbf{1}     & 0.10, 24.44      & 0.17, 21.52   & 0.10, 26.23     \\ \hline
-\textbf{2}     & 0.23, 26.81      & 0.23, 24.51   & 0.23, 28.29     \\ \hline
-\textbf{3}     & 0.35, 28.32      & 0.36, 27.53   & 0.35, 29.54     \\ \hline
-\textbf{4}     & 0.48, 29.46      & 0.48, 29.08   & 0.47, 30.66     \\ \hline
-\textbf{5}     & 0.60, 30.44      & 0.60, 30.23   & 0.60, 31.68     \\ \hline
-\textbf{6}     & 0.73, 31.26      & 0.73, 31.14   & 0.72, 32.55     \\ \hline
-\textbf{7}     & 0.85, 31.98      & 0.85, 31.92   & 0.85, 33.43     \\ \hline
-\textbf{8}     & 0.98, 32.63      & 0.98, 32.60   & 0.97, 34.10     \\ \hline
-\textbf{9}     & 1.10, 33.19      & 1.10, 33.21   & 1.10, 34.81     \\ \hline
-\textbf{10}    & 1.23, 33.65      & 1.22, 33.72   & 1.21, \textbf{35.37}     \\ \hline}
+\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e PSNR (decíbeis) do Modelo 4, JPEG e JPEG2000 para a base~\cite{kodak}}{tab:mod4_psnr}{|c |c c |c c|c c| c c| }{\cline{2-9}
+\multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Network} & \multicolumn{2}{c|}{Network + GZIP} & \multicolumn{2}{c|}{JPEG} & \multicolumn{2}{c|}{JPEG 2000} \\ \hline
+  \textbf{Nível} & Taxa & PSNR & Taxa & PSNR & Taxa & PSNR & Taxa & PSNR \\ \hline	
+\textbf{1}     & $0.125$ & $24.44$ & $0.10$ & $24.44$ & $0.17$ & $21.52$ & $0.10$ & $26.23$     \\ 
+\textbf{2}     & $0.250$ & $26.81$ & $0.23$ & $26.81$ & $0.23$ & $24.51$ & $0.23$ & $28.29$     \\ 
+\textbf{3}     & $0.375$ & $28.32$ & $0.35$ & $28.32$ & $0.36$ & $27.53$ & $0.35$ & $29.54$     \\ 
+\textbf{4}     & $0.500$ & $29.46$ & $0.48$ & $29.46$ & $0.48$ & $29.08$ & $0.47$ & $30.66$     \\ 
+\textbf{5}     & $0.625$ & $30.44$ & $0.60$ & $30.44$ & $0.60$ & $30.23$ & $0.60$ & $31.68$     \\ 
+\textbf{6}     & $0.750$ & $31.26$ & $0.73$ & $31.26$ & $0.73$ & $31.14$ & $0.72$ & $32.55$     \\ 
+\textbf{7}     & $0.875$ & $31.98$ & $0.85$ & $31.98$ & $0.85$ & $31.92$ & $0.85$ & $33.43$     \\ 
+\textbf{8}     & $1.000$ & $32.63$ & $0.98$ & $32.63$ & $0.98$ & $32.60$ & $0.97$ & $34.10$     \\ 
+\textbf{9}     & $1.125$ & $33.19$ & $1.10$ & $33.19$ & $1.10$ & $33.21$ & $1.10$ & $34.81$     \\ 
+\textbf{10}    & $1.250$ & $33.65$ & $1.23$ & $33.65$ & $1.22$ & $33.72$ & $1.21$ & \textbf{35.37}     \\ \hline}
 
-\tabela{Tabela contendo os valores da \acrshort{BPP} e SSIM (\acrshort{BPP}, SSIM) do Modelo 4, JPEG e JPEG2000}{tab:mod4_ssim}{|l|l|l|l|}{\hline
-\textbf{Nível} & \textbf{Network} & \textbf{JPEG} & \textbf{JPEG2K} \\ \hline
-\textbf{1}     & 0.10, 0.65586       & 0.17, 0.56163    & 0.10, 0.69056      \\ \hline
-\textbf{2}     & 0.23, 0.74829       & 0.23, 0.66125    & 0.23, 0.77412      \\ \hline
-\textbf{3}     & 0.35, 0.80243       & 0.36, 0.76348    & 0.35, 0.81706      \\ \hline
-\textbf{4}     & 0.48, 0.83860       & 0.48, 0.81317    & 0.47, 0.84603      \\ \hline
-\textbf{5}     & 0.60, 0.86547       & 0.60, 0.84571    & 0.60, 0.86805      \\ \hline
-\textbf{6}     & 0.73, 0.88592       & 0.73, 0.86819    & 0.72, 0.88374      \\ \hline
-\textbf{7}     & 0.85, 0.90060       & 0.85, 0.88507    & 0.85, 0.89826      \\ \hline
-\textbf{8}     & 0.98, 0.91252       & 0.98, 0.89808    & 0.97, 0.90900      \\ \hline
-\textbf{9}     & 1.10, 0.92177       & 1.10, 0.90873    & 1.10, 0.91981      \\ \hline
-\textbf{10}    & 1.23, \textbf{0.92873}       & 1.22, 0.91712    & 1.21, 0.92769      \\ \hline}
+\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e SSIM do Modelo 4, JPEG e JPEG2000 para a base~\cite{kodak}}{tab:mod4_ssim}{|c |c c |c c|c c| c c| }{
+\cline{2-9}
+\multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Network} & \multicolumn{2}{c|}{Network + GZIP} & \multicolumn{2}{c|}{JPEG} & \multicolumn{2}{c|}{JPEG 2000} \\ \hline
+  \textbf{Nível} & Taxa & SSIM & Taxa & SSIM & Taxa & SSIM & Taxa & SSIM \\ \hline	
+\textbf{1}     & $0.125$ &  $0.65586$ &  $0.10$  &  $0.65586$        &  $0.17$  &  $0.56163$     &  $0.10$  &  $0.69056$       \\ 
+\textbf{2}     & $0.250$ &  $0.74829$ &  $0.23$  &  $0.74829$        &  $0.23$  &  $0.66125$     &  $0.23$  &  $0.77412$       \\ 
+\textbf{3}     & $0.375$ &  $0.80243$ &  $0.35$  &  $0.80243$        &  $0.36$  &  $0.76348$     &  $0.35$  &  $0.81706$       \\ 
+\textbf{4}     & $0.500$ &  $0.83860$ &  $0.48$  &  $0.83860$        &  $0.48$  &  $0.81317$     &  $0.47$  &  $0.84603$       \\ 
+\textbf{5}     & $0.625$ &  $0.86547$ &  $0.60$  &  $0.86547$        &  $0.60$  &  $0.84571$     &  $0.60$  &  $0.86805$       \\ 
+\textbf{6}     & $0.750$ &  $0.88592$ &  $0.73$  &  $0.88592$        &  $0.73$  &  $0.86819$     &  $0.72$  &  $0.88374$       \\ 
+\textbf{7}     & $0.875$ &  $0.90060$ &  $0.85$  &  $0.90060$        &  $0.85$  &  $0.88507$     &  $0.85$  &  $0.89826$       \\ 
+\textbf{8}     & $1.000$ &  $0.91252$ &  $0.98$  &  $0.91252$        &  $0.98$  &  $0.89808$     &  $0.97$  &  $0.90900$       \\ 
+\textbf{9}     & $1.125$ &  $0.92177$ &  $1.10$  &  $0.92177$        &  $1.10$  &  $0.90873$     &  $1.10$  &  $0.91981$       \\ 
+\textbf{10}    & $1.250$ &  $0.92873$ &  $1.23$  &  \textbf{0.92873}        &  $1.22$  &  $0.91712$     &  $1.21$  &  $0.92769$       \\ \hline}
 
-\tabela{Tabela contendo os valores da \acrshort{BPP} e MSSSIM (\acrshort{BPP}, MSSSIM) do Modelo 4, JPEG e JPEG2000}{tab:mod4_msssim}{|l|l|l|l|}{\hline
-\textbf{Nível} & \textbf{Network} & \textbf{JPEG} & \textbf{JPEG2K} \\ \hline
-\textbf{1}     & 0.10, 0.84270      & 0.17, 0.71702   & 0.10, 0.88245     \\ \hline
-\textbf{2}     & 0.23, 0.92192      & 0.23, 0.82584   & 0.23, 0.93421     \\ \hline
-\textbf{3}     & 0.35, 0.94893      & 0.36, 0.91058   & 0.35, 0.95471     \\ \hline
-\textbf{4}     & 0.48, 0.96244      & 0.48, 0.94160   & 0.47, 0.96546     \\ \hline
-\textbf{5}     & 0.60, 0.97054      & 0.60, 0.95843   & 0.60, 0.97269     \\ \hline
-\textbf{6}     & 0.73, 0.97581      & 0.73, 0.96788   & 0.72, 0.97750     \\ \hline
-\textbf{7}     & 0.85, 0.97993      & 0.85, 0.97420   & 0.85, 0.98118     \\ \hline
-\textbf{8}     & 0.98, 0.98274      & 0.98, 0.97840   & 0.97, 0.98387     \\ \hline
-\textbf{9}     & 1.10, 0.98502      & 1.10, 0.98158   & 1.10, 0.98630     \\ \hline
-\textbf{10}    & 1.23, 0.98665      & 1.22, 0.98381   & 1.21, \textbf{0.98807}     \\ \hline}
+\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e MSSSIM do Modelo 4, JPEG e JPEG2000 para a base~\cite{kodak}}{tab:mod4_msssim}{|c |c c |c c|c c| c c| }{\cline{2-9}
+\multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Network} & \multicolumn{2}{c|}{Network + GZIP} & \multicolumn{2}{c|}{JPEG} & \multicolumn{2}{c|}{JPEG 2000} \\ \hline
+  \textbf{Nível} & Taxa & MS & Taxa & MS & Taxa & MS & Taxa & MS \\ \hline	
+  \textbf{1}     & $0.125$ &  $0.84270$  &  $0.10$  &  $0.84270$       &  $0.17$  &  $0.71702$    &  $0.10$  &  $0.88245$      \\ 
+  \textbf{2}     & $0.250$ &  $0.92192$  &  $0.23$  &  $0.92192$       &  $0.23$  &  $0.82584$    &  $0.23$  &  $0.93421$      \\ 
+  \textbf{3}     & $0.375$ &  $0.94893$  &  $0.35$  &  $0.94893$       &  $0.36$  &  $0.91058$    &  $0.35$  &  $0.95471$      \\ 
+  \textbf{4}     & $0.500$ &  $0.96244$  &  $0.48$  &  $0.96244$       &  $0.48$  &  $0.94160$    &  $0.47$  &  $0.96546$      \\ 
+  \textbf{5}     & $0.625$ &  $0.97054$  &  $0.60$  &  $0.97054$       &  $0.60$  &  $0.95843$    &  $0.60$  &  $0.97269$      \\ 
+  \textbf{6}     & $0.750$ &  $0.97581$  &  $0.73$  &  $0.97581$       &  $0.73$  &  $0.96788$    &  $0.72$  &  $0.97750$      \\ 
+  \textbf{7}     & $0.875$ &  $0.97993$  &  $0.85$  &  $0.97993$       &  $0.85$  &  $0.97420$    &  $0.85$  &  $0.98118$      \\ 
+  \textbf{8}     & $1.000$ &  $0.98274$  &  $0.98$  &  $0.98274$       &  $0.98$  &  $0.97840$    &  $0.97$  &  $0.98387$      \\ 
+  \textbf{9}     & $1.125$ &  $0.98502$  &  $1.10$  &  $0.98502$       &  $1.10$  &  $0.98158$    &  $1.10$  &  $0.98630$      \\ 
+  \textbf{10}    & $1.250$ &  $0.98665$  &  $1.23$  &  $0.98665$       &  $1.22$  &  $0.98381$    &  $1.21$  &  \textbf{0.98807} 	 \\ \hline}
 
-Apesar da função de perda utilizada ser a \acrshort{MSE}, o modelo conseguiu obter melhores resultados do que os codecs na \acrshort{SSIM} e \acrshort{MS-SSIM}.
-% Falar sobre o melhor resultado obtido na métrica SSIM e vantagem do modelo em frequências altas (kodim05) em contrapartida com frequências mais simples/baixas (kodim09)
+Apesar da função de perda utilizada ser a \acrshort{MSE}, o modelo conseguiu obter melhores resultados comparados aos codecs na \acrshort{SSIM} e \acrshort{MS-SSIM}.
 
-\figura[!htb]{_mean_plot_psnr_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a base Kodak~\cite{kodak}}{_mean_plot_psnr_10levels}{width=0.6\textwidth}
-\figura[!htb]{_mean_plot_ssim_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a base Kodak~\cite{kodak}}{_mean_plot_ssim_10levels}{width=0.6\textwidth}
-\figura[!htb]{_mean_plot_msssim_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a base Kodak~\cite{kodak}}{_mean_plot_msssim_10levels}{width=0.6\textwidth}
+\figura[!htbp]{_mean_plot_psnr_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a base Kodak~\cite{kodak}}{_mean_plot_psnr_10levels}{width=0.6\textwidth}
+\figura[!htbp]{_mean_plot_ssim_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a base Kodak~\cite{kodak}}{_mean_plot_ssim_10levels}{width=0.6\textwidth}
+\figura[!htbp]{_mean_plot_msssim_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a base Kodak~\cite{kodak}}{_mean_plot_msssim_10levels}{width=0.6\textwidth}
 
-Nota-se que para imagens com muitos detalhes, com alto conteúdo de altas frequências, o modelo se sai melhor para todas as métricas visuais avaliadas. O que era esperado, visto que o JPEG e o JPEG2000 assumem que sinais de alta frequência não importam muito (assumem que maior parte energia da imagem estará contida em coeficientes de baixa frequência) e tende a priorizar que os coeficientes de baixa frequência tenham maior precisão ao quantizar.
+Nota-se que para imagens (\refFigs{kodim05}{jason-leem-143987}) com muito conteúdo de alta frequência (muitos detalhes), o modelo se sai melhor para todas as métricas visuais avaliadas. O que era esperado, visto que o JPEG e o JPEG2000 assumem que sinais de alta frequência não importam muito (assumem que maior parte energia da imagem estará contida em coeficientes de baixa frequência) e faz com que os coeficientes de baixa frequência tenham maior precisão ao quantizar.
 
-\figura[!htb]{kodim05_10levels_comparison}{Imagem kodim05~\cite{kodak} original no canto superior esquerdo. Imagem comprimida pelo modelo no canto superior direito. Imagem do canto inferior esquerdo é a comprimida pelo JPEG e a última pelo JPEG2000}{kodim05_10levels_comparison}{width=\textwidth}
+\figura[!htbp]{kodim05}{Imagem Kodim05~\cite{kodak}}{kodim05}{width=0.7\textwidth}
+\figura[!htbp]{jason-leem-143987}{Imagem jason-leem~\cite{clic}}{jason-leem-143987}{width=0.7\textwidth}
 
-\figura[!htb]{kodim05_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a imagem kodim05~\cite{kodak}}{kodim05_plot_psnr}{width=0.6\textwidth}
-\figura[!htb]{kodim05_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a imagem kodim05~\cite{kodak}}{kodim05_plot_ssim}{width=0.6\textwidth}
-\figura[!htb]{kodim05_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a imagem kodim05~\cite{kodak}}{kodim05_plot_msssim}{width=0.6\textwidth}
+\figura[!htbp]{kodim05_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a imagem kodim05~\cite{kodak}}{kodim05_plot_psnr}{width=0.6\textwidth}
+\figura[!htbp]{kodim05_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a imagem kodim05~\cite{kodak}}{kodim05_plot_ssim}{width=0.6\textwidth}
+\figura[!htbp]{kodim05_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a imagem kodim05~\cite{kodak}}{kodim05_plot_msssim}{width=0.6\textwidth}
 
-\figura[!htb]{kodim09_10levels_comparison}{Imagem kodim09~\cite{kodak} original no canto superior esquerdo. Imagem comprimida pelo modelo no canto superior direito. Imagem do canto inferior esquerdo é a comprimida pelo JPEG e a última pelo JPEG2000}{kodim09_10levels_comparison}{width=0.8\textwidth}
+\figura[!htbp]{jason-leem-143987_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a imagem de~\cite{clic}}{jason-leem-143987_plot_psnr}{width=0.6\textwidth}
+\figura[!htbp]{jason-leem-143987_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a imagem de~\cite{clic}}{jason-leem-143987_plot_ssim}{width=0.6\textwidth}
+\figura[!htbp]{jason-leem-143987_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a imagem de~\cite{clic}}{jason-leem-143987_plot_msssim}{width=0.6\textwidth}
 
-\figura[!htb]{kodim09_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a imagem kodim09~\cite{kodak}}{kodim09_plot_psnr}{width=0.6\textwidth}
-\figura[!htb]{kodim09_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a imagem kodim09~\cite{kodak}}{kodim09_plot_ssim}{width=0.6\textwidth}
-\figura[!htb]{kodim09_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a imagem kodim09~\cite{kodak}}{kodim09_plot_msssim}{width=0.6\textwidth}
+Considerando os resultados anteriores obtidos para as imagens kodim05 e kodim09, o Modelo 4 também foi testado em um conjunto de 47 imagens com muito conteúdo de alta frequência retiradas da~\cite{kodak} e da~\cite{clic}. Os resultados são mostrados nas~\refFigs{_mean_plot_psnr_hf_10levels}{_mean_plot_msssim_hf_10levels} e sumarizados nas~\refTabs{tab:mod4_hf_psnr}{tab:mod4_hf_msssim}. 
+
+\figura[!htbp]{_mean_plot_psnr_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e ~\cite{kodak}}{_mean_plot_psnr_hf_10levels}{width=0.6\textwidth}
+\figura[!htbp]{_mean_plot_ssim_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e ~\cite{kodak}}{_mean_plot_ssim_hf_10levels}{width=0.6\textwidth}
+\figura[!htbp]{_mean_plot_msssim_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e ~\cite{kodak}}{_mean_plot_msssim_hf_10levels}{width=0.6\textwidth}
+
+\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e PSNR do Modelo 4, JPEG e JPEG2000 para 47 imagens da base~\cite{kodak} e~\cite{clic} com muito conteúdo de alta frequência}{tab:mod4_hf_psnr}{|c |c c |c c|c c| c c| }{\cline{2-9}
+\multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Network} & \multicolumn{2}{c|}{Network + GZIP} & \multicolumn{2}{c|}{JPEG} & \multicolumn{2}{c|}{JPEG 2000} \\ \hline
+  \textbf{Nível} & Taxa & PSNR & Taxa & PSNR & Taxa & PSNR & Taxa & PSNR \\ \hline	
+  \textbf{1}     & $0.125$ & $24.69$         & $0.10$ & $24.69$      & $0.17$ & $21.51$   & $0.10$ & $26.63$     \\
+  \textbf{2}     & $0.250$ & $27.23$         & $0.21$ & $27.23$      & $0.22$ & $24.64$   & $0.21$ & $28.59$     \\
+  \textbf{3}     & $0.375$ & $28.72$         & $0.34$ & $28.72$      & $0.34$ & $27.63$   & $0.33$ & $29.70$     \\
+  \textbf{4}     & $0.500$ & $29.77$         & $0.46$ & $29.77$      & $0.46$ & $28.98$   & $0.46$ & $30.54$     \\
+  \textbf{5}     & $0.625$ & $30.64$         & $0.59$ & $30.64$      & $0.59$ & $29.90$   & $0.58$ & $31.31$     \\
+  \textbf{6}     & $0.750$ & $31.38$         & $0.71$ & $31.38$      & $0.71$ & $30.64$   & $0.71$ & $31.99$     \\
+  \textbf{7}     & $0.875$ & $32.01$         & $0.84$ & $32.01$      & $0.84$ & $31.22$   & $0.83$ & $32.66$     \\
+  \textbf{8}     & $1.000$ & $32.57$         & $0.96$ & $32.57$      & $0.96$ & $31.75$   & $0.95$ & $33.23$     \\
+  \textbf{9}     & $1.125$ & $33.06$         & $1.09$ & $33.06$      & $1.10$ & $32.23$   & $1.08$ & $33.81$     \\
+  \textbf{10}    & $1.250$ & $33.45$         & $1.20$ & $33.45$      & $1.21$ & $32.67$   & $1.20$ & \textbf{34.30}     \\ \hline}
+
+\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e SSIM do Modelo 4, JPEG e JPEG2000 para 47 imagens da base~\cite{kodak} e~\cite{clic} com muito conteúdo de alta frequência}{tab:mod4_hf_ssim}{|c |c c |c c|c c| c c| }{\cline{2-9}
+\multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Network} & \multicolumn{2}{c|}{Network + GZIP} & \multicolumn{2}{c|}{JPEG} & \multicolumn{2}{c|}{JPEG 2000} \\ \hline
+\textbf{Nível} & Taxa & SSIM & Taxa & SSIM & Taxa & SSIM & Taxa & SSIM \\ \hline	
+\textbf{1}     & $0.125$ & $0.64562$ & $0.10$ & $0.64562$      & $0.17$ & $0.55499$   & $0.10$ & $0.68526$     \\
+\textbf{2}     & $0.250$ & $0.74250$ & $0.21$ & $0.74250$      & $0.22$ & $0.64966$   & $0.21$ & $0.76202$     \\ 
+\textbf{3}     & $0.375$ & $0.79480$ & $0.34$ & $0.79480$      & $0.34$ & $0.74767$   & $0.33$ & $0.80283$     \\ 
+\textbf{4}     & $0.500$ & $0.82961$ & $0.46$ & $0.82961$      & $0.46$ & $0.79561$   & $0.46$ & $0.82961$     \\ 
+\textbf{5}     & $0.625$ & $0.85558$ & $0.59$ & $0.85558$      & $0.59$ & $0.82607$   & $0.58$ & $0.84989$     \\ 
+\textbf{6}     & $0.750$ & $0.87530$ & $0.71$ & $0.87530$      & $0.71$ & $0.84832$   & $0.71$ & $0.86553$     \\ 
+\textbf{7}     & $0.875$ & $0.88973$ & $0.84$ & $0.88973$      & $0.84$ & $0.86414$   & $0.83$ & $0.87862$     \\ 
+\textbf{8}     & $1.000$ & $0.90168$ & $0.96$ & $0.90168$      & $0.96$ & $0.87722$   & $0.95$ & $0.89020$     \\ 
+\textbf{9}     & $1.125$ & $0.91092$ & $1.09$ & $0.91092$      & $1.10$ & $0.88800$   & $1.08$ & $0.90109$     \\ 
+\textbf{10}    & $1.250$ & $0.91784$  & $1.20$ & \textbf{0.91784}      & $1.21$ & $0.89648$   & $1.20$ & $0.90973$  \\ \hline}
+
+\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e MSSSIM do Modelo 4, JPEG e JPEG2000 para 47 imagens da base~\cite{kodak} e~\cite{clic} com muito conteúdo de alta frequência}{tab:mod4_hf_msssim}{|c |c c |c c|c c| c c| }{\cline{2-9}
+\multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Network} & \multicolumn{2}{c|}{Network + GZIP} & \multicolumn{2}{c|}{JPEG} & \multicolumn{2}{c|}{JPEG 2000} \\ \hline
+\textbf{Nível} & Taxa & MS & Taxa & MS & Taxa & MS & Taxa & MS \\ \hline	
+\textbf{1}     & 0.10 & 0.84156     & 0.10 & 0.84156      & 0.17 & 0.72882   & 0.10 & 0.87953     \\ 
+\textbf{2}     & 0.21 & 0.92131     & 0.21 & 0.92131      & 0.22 & 0.82462   & 0.21 & 0.92713     \\ 
+\textbf{3}     & 0.34 & 0.94802     & 0.34 & 0.94802      & 0.34 & 0.90454   & 0.33 & 0.94699     \\ 
+\textbf{4}     & 0.46 & 0.96112     & 0.46 & 0.96112      & 0.46 & 0.93426   & 0.46 & 0.95877     \\ 
+\textbf{5}     & 0.59 & 0.96897     & 0.59 & 0.96897      & 0.59 & 0.95006   & 0.58 & 0.96628     \\ 
+\textbf{6}     & 0.71 & 0.97408     & 0.71 & 0.97408      & 0.71 & 0.96010   & 0.71 & 0.97148     \\ 
+\textbf{7}     & 0.84 & 0.97806     & 0.84 & 0.97806      & 0.84 & 0.96655   & 0.83 & 0.97552     \\ 
+\textbf{8}     & 0.96 & 0.98088     & 0.96 & 0.98088      & 0.96 & 0.97134   & 0.95 & 0.97863     \\ 
+\textbf{9}     & 1.09 & 0.98315     & 1.09 & 0.98315      & 1.10 & 0.97483   & 1.08 & 0.98151     \\ 
+\textbf{10}    & 1.20 & 0.98477     & 1.20 & \textbf{0.98477}      & 1.21 & 0.97746   & 1.20 & 0.98356 \\ \hline}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelo 5}
 \ref{res:mod5}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ganhos obtidos pelo GZIP}
+\label{res:gzip}
+Nas seguintes subseções será analisado o ganho na taxa obtido ao usar o codificador de entropia \textit{gzip}.
+\subsection{Modelo 4}
+A~\refFig{gain_gzip_mod4} mostra o ganho percentual médio por nível do Modelo 4~[\ref{res:mod4}] para a base da Kodak~\cite{kodak}. Nota-se um decaímento exponencial no ganho. Considerando o funcionamento do modelo com resíduos, isto sugere uma especialização e robustez cada vez maior nos \textit{encoders} dos níveis mais superiores ao explorar estruturas dos dados e comprimir informação nos latentes. Assim, os \textit{bitstreams} gerados a partir dos latentes se tornam cada vez mais complexos (os resíduos possuirão muita variância nos valores) e com menos redundâncias fazendo com que o \textit{gzip} não consiga explorar redundâncias bem ou que não haja muitas redundâncias. 
+
+Isto acontece na maior parte das imagens, principalmente nas que possui muito conteúdo de alta frequência e onde há muita informação que, consequentemente, geram latentes muito complexos, o que faz com que os \textit{bitstreams} contenham muita informação já que os resíduos dos \textit{patches} contém muita informação e geram muitas ativações no modelo.
+
+\figura[!htbp]{gain_gzip_mod4}{Ganho percentual médio na taxa por nível ao usar o codificador de entropia \textit{gzip} nos \textit{bitstreams} de cada nível para a base Kodak~\cite{kodak}}{gain_gzip_mod4}{width=\textwidth}
+% \figura[!htbp]{gain_gzip_mod4_hf}{Ganho percentual médio na taxa por nível ao usar o codificador de entropia \textit{gzip} nos \textit{bitstreams} de cada nível para 47 imagens com muito conteúdo de alta frequência da base Kodak~\cite{kodak} e~\cite{clic}}{gain_gzip_mod4_hf}{width=\textwidth}
+
+Na~\refFig{gain_gzip_kodim05} é possível notar um ganho praticamente insignificante (e até negativo) ao usar o \textit{gzip} para a~\refFig{kodim05}, enquanto na~\refFig{gain_gzip_kodim20} nota-se um ganho mais significativo com o \textit{gzip} mesmo nos níveis mais superiores. Considerando que a~\refFig{kodim05} possui muito conteúdo de alta frequência, os \textit{bitstreams} gerados pelo modelo se tornam muito complexos. Enquanto, a~\refFig{kodim20} possui um céu que faz parte da maior parte da imagem. É possível que os resíduos desses \textit{patches} se tornem pequenos muito rápido de modo que o \textit{gzip} é capaz de explorar bem esta grande quantidade de zeros.
+
+\figura[!htbp]{kodim20}{Imagem Kodim20~\cite{kodak}}{kodim20}{width=0.7\textwidth}
+\figura[!htbp]{gain_gzip_kodim05}{Ganho percentual na taxa por nível ao usar o codificador de entropia \textit{gzip} nos \textit{bitstreams} de cada nível para a~\refFig{kodim05}}{gain_gzip_kodim05}{width=0.7\textwidth}
+\figura[!htbp]{gain_gzip_kodim20}{Ganho percentual na taxa por nível ao usar o codificador de entropia \textit{gzip} nos \textit{bitstreams} de cada nível para a~\refFig{kodim20}}{gain_gzip_kodim20}{width=0.7\textwidth}
