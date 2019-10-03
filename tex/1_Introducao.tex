@@ -41,7 +41,6 @@ Compressão de imagens usando redes neurais tem sido uma área ativa de pesquisa
 \begin{itemize}
     \item Deseja-se verificar se modelos baseados em \textit{autoencoders} convolucionais são competitivos com os clássicos codecs \textit{JPEG} e \textit{JPEG2000} para imagens com muito conteúdo de alta frequência;
     \item Deseja-se verificar se usar imagens que codificadores clássicos têm dificuldade para comprimir para treinamento do modelo é benéfico para os resultados dele;
-    \item Deseja-se verificar se o modelo recursivo é melhor que o modelo não recursivo para a tarefa de compressão de imagens;
     \item Deseja-se verificar se o codificador de entropia utilizado no latente será capaz de comprimir em proporções semelhantes para todos os níveis de resíduos;
     \item Deseja-se verificar se os resultados dos \textit{autoencoders} serão melhores ao trabalhar com um diferente domínio para os dados de entrada, um que beneficie o processo de aprendizagem via atualização de gradientes. Ou seja, se é benéfico para o desempenho do modelo aplicar uma transformação nos dados de entrada que evite problemas como gradientes muito pequenos;
 \end{itemize}
@@ -50,7 +49,7 @@ Estas verificações serão dadas usando-se métricas visuais objetivas e as ima
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Objetivos}
 \label{sec:objetivos}
-Deseja-se construir e avaliar o desempenho de um \textit{framework} de compressão de imagens ponta a ponta (modelagem e codificação) usando \textit{autoencoders} empilhados convolucionais recorrentes e não recorrentes.
+Deseja-se construir e avaliar o desempenho de um \textit{framework} de compressão de imagens ponta a ponta (modelagem e codificação) usando \textit{autoencoders} empilhados convolucionais recorrentes.
 
 Para isto serão estudadas propostas de compressão de imagens na literatura, de modo a obter estatísticas e informações para guiar a escolha e implementação de codificadores baseados em autoencoders que estendam a estrutura básica de um autoencoder, gerando uma representação binária para a imagem ao quantizar a camada de gargalo ou as variáveis latentes correspondentes. Esta representação binária será ainda comprimida usando um codificador de entropia. Também serão construídas bases de dados próprias, a partir de bases de dados comumente utilizadas para esse problema, para que seja avaliado o desempenho, à diferentes taxas, de \textit{autoencoders} convolucionais e dos codecs \textit{JPEG} e \textit{JPEG2000} nas mais variadas imagens. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
