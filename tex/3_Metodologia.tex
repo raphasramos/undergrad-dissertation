@@ -56,7 +56,7 @@ Para cada um desses \textit{patches}, o modelo é treinado de maneira residual c
 
 Os latentes são concatenados de modo que para o nível $n$ tem-se $n$ latentes binarizados concatenados. Assim, para o nível 1 tem-se o \textit{bitstream} $b_1$ correspondente ao latente binarizado do nível 1, para o nível 2 tem-se o \textit{bitstream} $b_1 + b_2$, e assim em diante. De maneira geral, para o nível $n$ tem-se $b_1 + b_2 + \dots + b_n$, onde $+$ denota a concatenação de \textit{bitstreams}. 
 
-Para os últimos três modelos foi usado o \textit{gzip} (codificador de entropia) no latente com o objetivo de reduzir a taxa de bits por pixel.
+Do modelo 4 em diante foi usado o \textit{gzip} (codificador de entropia) no latente com o objetivo de reduzir a taxa de bits por pixel.
 
 Nas seguintes subseções são apresentadas as ilustrações de algumas arquiteturas utilizadas. Os retângulos indicam as convoluções e os retângulos arredondados indicam as convoluções transpostas. O tamanho do \textit{kernel} $w$ é indicado na primeira linha do retângulo. A segunda linha informa o número de filtros (canais de saídas). A última linha indica o tamanho (igual nas duas direções) do \textit{stride} utilizado e a função de ativação. A última camada do \textit{decoder} (convolução transposta) de cada um dos modelos é usada para recuperar a informação de cor.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
