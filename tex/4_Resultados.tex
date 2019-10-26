@@ -126,9 +126,9 @@ Nota-se que para imagens (\refFigs{kodim05}{jason-leem-143987}) com muito conte�
 \figura[!htbp]{kodim05}{Imagem Kodim05~\cite{kodak}}{kodim05}{width=0.7\textwidth}
 \figura[!htbp]{jason-leem-143987}{Imagem jason-leem~\cite{clic}}{jason-leem-143987}{width=0.7\textwidth}
 
-\figura[!htbp]{kodim05_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a imagem kodim05~\cite{kodak}}{kodim05_plot_psnr}{width=0.6\textwidth}
-\figura[!htbp]{kodim05_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a imagem kodim05~\cite{kodak}}{kodim05_plot_ssim}{width=0.6\textwidth}
-\figura[!htbp]{kodim05_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a imagem kodim05~\cite{kodak}}{kodim05_plot_msssim}{width=0.6\textwidth}
+\figura[!htbp]{kodim05_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a imagem~\refFig{kodim05}}{kodim05_plot_psnr}{width=0.6\textwidth}
+\figura[!htbp]{kodim05_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a imagem~\refFig{kodim05}}{kodim05_plot_ssim}{width=0.6\textwidth}
+\figura[!htbp]{kodim05_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a imagem~\refFig{kodim05}}{kodim05_plot_msssim}{width=0.6\textwidth}
 
 \figura[!htbp]{jason-leem-143987_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a imagem de~\cite{clic}}{jason-leem-143987_plot_psnr}{width=0.6\textwidth}
 \figura[!htbp]{jason-leem-143987_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a imagem de~\cite{clic}}{jason-leem-143987_plot_ssim}{width=0.6\textwidth}
@@ -136,9 +136,9 @@ Nota-se que para imagens (\refFigs{kodim05}{jason-leem-143987}) com muito conte�
 
 Considerando os resultados anteriores obtidos para as imagens kodim05 e kodim09, o Modelo 4 também foi testado em um conjunto de 47 imagens com muito conteúdo de alta frequência retiradas da~\cite{kodak} e da~\cite{clic}. Os resultados são mostrados nas~\refFigs{_mean_plot_psnr_hf_10levels}{_mean_plot_msssim_hf_10levels} e sumarizados nas~\refTabs{tab:mod4_hf_psnr}{tab:mod4_hf_msssim}. 
 
-\figura[!htbp]{_mean_plot_psnr_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e ~\cite{kodak}}{_mean_plot_psnr_hf_10levels}{width=0.6\textwidth}
-\figura[!htbp]{_mean_plot_ssim_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e ~\cite{kodak}}{_mean_plot_ssim_hf_10levels}{width=0.6\textwidth}
-\figura[!htbp]{_mean_plot_msssim_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e ~\cite{kodak}}{_mean_plot_msssim_hf_10levels}{width=0.6\textwidth}
+\figura[!htbp]{_mean_plot_psnr_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e~\cite{kodak}}{_mean_plot_psnr_hf_10levels}{width=0.6\textwidth}
+\figura[!htbp]{_mean_plot_ssim_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e~\cite{kodak}}{_mean_plot_ssim_hf_10levels}{width=0.6\textwidth}
+\figura[!htbp]{_mean_plot_msssim_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e~\cite{kodak}}{_mean_plot_msssim_hf_10levels}{width=0.6\textwidth}
 
 \tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e PSNR do Modelo 4, JPEG e JPEG2000 para 47 imagens da base~\cite{kodak} e~\cite{clic} com muito conteúdo de alta frequência}{tab:mod4_hf_psnr}{|c |c c |c c|c c| c c| }{\cline{2-9}
 \multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Network} & \multicolumn{2}{c|}{Network + GZIP} & \multicolumn{2}{c|}{JPEG} & \multicolumn{2}{c|}{JPEG 2000} \\ \hline
@@ -181,11 +181,33 @@ Considerando os resultados anteriores obtidos para as imagens kodim05 e kodim09,
 \textbf{8}     & 0.96 & 0.98088     & 0.96 & 0.98088      & 0.96 & 0.97134   & 0.95 & 0.97863     \\ 
 \textbf{9}     & 1.09 & 0.98315     & 1.09 & 0.98315      & 1.10 & 0.97483   & 1.08 & 0.98151     \\ 
 \textbf{10}    & 1.20 & 0.98477     & 1.20 & \textbf{0.98477}      & 1.21 & 0.97746   & 1.20 & 0.98356 \\ \hline}
+
+Pelas~\refFigs{kodim05_3_net}{kodim05_3_jpeg2k} é possível notar o que as~\refFigs{kodim05_plot_psnr}{kodim05_plot_msssim} já haviam mostrado: a reconstrução do Modelo 4 é visualmente superior para a~\refFig{kodim05} quando comparada com o \textbf{JPEG} e \textbf{JPEG2000}, mesmo com uma taxa menor. Essa taxa corresponde ao quarto nível de resíduo para o Modelo 4.
+
+\figura[!htbp]{kodim05_3_net}{Imagem~\refFig{kodim05} reconstruída pelo Modelo 4 à uma taxa de 0.47 bits por pixel.}{kodim05_3_net}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_3_jpeg}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG} à uma taxa de 0.50 bits por pixel.}{kodim05_3_jpeg}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_3_jpeg2k}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG2000} à uma taxa de 0.50 bits por pixel}{kodim05_3_jpeg2k}{width=0.7\textwidth}
+
+Para taxas muito baixas é possível notar uma grande dificuldade do \textbf{JPEG} em comprimir para a~\refFig{kodim05} mesmo com uma taxa maior, conforme mostra as~\refFigs{kodim05_0_net}{kodim05_0_jpeg2k}. Essa taxa corresponde ao primeiro nível de resíduo para o Modelo 4.
+
+\figura[!htbp]{kodim05_0_net}{Imagem~\refFig{kodim05} reconstruída pelo Modelo 4 à uma taxa de 0.12 bits por pixel.}{kodim05_0_net}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_0_jpeg}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG} à uma taxa de 0.21 bits por pixel.}{kodim05_0_jpeg}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_0_jpeg2k}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG2000} à uma taxa de 0.12 bits por pixel}{kodim05_0_jpeg2k}{width=0.7\textwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Modelo 5}
+\section{Modelos 5, 6 e 7}
+\label{res:6levels}
+Esses três modelos foram treinados com 150000 iterações nas bases \textbf{BD2} e \textbf{BD4}. Foram utilizados 6 níveis de resíduos. 
+
+% Colocar os plots de comparação dos modelos treinados usando mse, ssim e pseudo-variacional loss.
+A função de loss utilizada no Modelo x é \equacao{loss}{Ke^{(-0.07r)}Q} onde $K = 3.5 \times 10^{-7}$ e $Q$ é a quantidade de bits 1 no latente binarizado. Com esta função de \textit{loss} há uma penalização na ocorrência do bit 1 o que leva a uma diminuição da entropia do latente binarizado. Espera-se que o codificador de entropia seja mais eficaz dessa forma.
+
+A função de loss utilizada no Modelo x+1 é \equacao{loss_ssim}{1 - SSIM(x, \hat{x})}, visto que a \acrshort{SSIM} é um valor entre 0 e 1 diretamente proporcional à qualidade visual da imagem reconstruída a partir do latente binarizado $\hat{x}$.  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Modelo 6}
+\section{Modelos 8, 9 e 10}
+% Colocar os plots de comparação dos modelos treinados usando diferentes ranges de entrada
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Comparar ganhos obtidos pelo GZIP nos modelos com diferentes funções de loss 
 \section{Ganhos obtidos pelo GZIP}
 \label{res:gzip}
 Nas seguintes subseções será analisado o ganho na taxa obtido ao usar o codificador de entropia \textit{gzip}.
@@ -197,7 +219,7 @@ Isto acontece na maior parte das imagens, principalmente nas que possui muito co
 \figura[!htbp]{gain_gzip_mod4}{Ganho percentual médio na taxa por nível ao usar o codificador de entropia \textit{gzip} nos \textit{bitstreams} de cada nível para a base Kodak~\cite{kodak}}{gain_gzip_mod4}{width=\textwidth}
 % \figura[!htbp]{gain_gzip_mod4_hf}{Ganho percentual médio na taxa por nível ao usar o codificador de entropia \textit{gzip} nos \textit{bitstreams} de cada nível para 47 imagens com muito conteúdo de alta frequência da base Kodak~\cite{kodak} e~\cite{clic}}{gain_gzip_mod4_hf}{width=\textwidth}
 
-Na~\refFig{gain_gzip_kodim05} é possível notar um ganho praticamente insignificante (e até negativo) ao usar o \textit{gzip} para a~\refFig{kodim05}, enquanto na~\refFig{gain_gzip_kodim20} nota-se um ganho mais significativo com o \textit{gzip} mesmo nos níveis mais superiores. Considerando que a~\refFig{kodim05} possui muito conteúdo de alta frequência, os \textit{bitstreams} gerados pelo modelo se tornam muito complexos. Enquanto, a~\refFig{kodim20} possui um céu que faz parte da maior parte da imagem. É possível que os resíduos desses \textit{patches} se tornem pequenos muito rápido de modo que o \textit{gzip} é capaz de explorar bem esta grande quantidade de zeros.
+Na~\refFig{gain_gzip_kodim05} é possível notar um ganho praticamente insignificante (e até negativo, prejudicial) ao usar o \textit{gzip} para a~\refFig{kodim05}, enquanto na~\refFig{gain_gzip_kodim20} nota-se um ganho mais significativo com o \textit{gzip} mesmo nos níveis mais superiores. Considerando que a~\refFig{kodim05} possui muito conteúdo de alta frequência, os \textit{bitstreams} gerados pelo modelo se tornam muito complexos. Enquanto, a~\refFig{kodim20} possui um céu que faz parte da maior parte da imagem. É possível que os resíduos desses \textit{patches} se tornem pequenos muito rápido de modo que o \textit{gzip} é capaz de explorar bem esta grande quantidade de zeros.
 
 \figura[!htbp]{kodim20}{Imagem Kodim20~\cite{kodak}}{kodim20}{width=0.7\textwidth}
 \figura[!htbp]{gain_gzip_kodim05}{Ganho percentual na taxa por nível ao usar o codificador de entropia \textit{gzip} nos \textit{bitstreams} de cada nível para a~\refFig{kodim05}}{gain_gzip_kodim05}{width=0.7\textwidth}

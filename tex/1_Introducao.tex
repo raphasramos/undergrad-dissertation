@@ -8,7 +8,7 @@ Compressão de dados é o processo de codificar uma determinada informação uti
 
 De forma sucinta, compressão de dados é arte ou ciência de representar informação de forma compacta~\cite{sayood2017introduction}. Nós criamos essas representações compactas identificando e usando estruturas que existem nos dados para que seja possível extrair redundância dos dados e descrevê-la em forma de um modelo que será usado como base para a codificação~\cite{sayood2017introduction}. 
 
-O desenvolvimento de algoritmos de compressão de dados podem ser divididos em duas fases~\cite{sayood2017introduction}. A primeira fase é geralmente chamada de modelagem. Nesta fase, tentamos extrair informações sobre qualquer redundância existente nos dados e descrevemos a redundância na forma de um modelo. A segunda fase é chamada de codificação. Uma descrição do modelo e uma ``descrição'' de como os dados diferem do modelo são codificados, geralmente usando um alfabeto binário. A diferença entre os dados e o modelo é frequentemente referida como resíduo.
+O desenvolvimento de algoritmos de compressão de dados podem ser divididos em duas fases~\cite{sayood2017introduction}. A primeira fase é geralmente chamada de modelagem. Nessa fase, tentamos extrair informações sobre qualquer redundância existente nos dados e descrevemos a redundância na forma de um modelo. A segunda fase é chamada de codificação: uma descrição do modelo e uma ``descrição'' de como os dados diferem do modelo são codificados, geralmente usando um alfabeto binário. A diferença entre os dados e o modelo é frequentemente referida como resíduo.
 
 Existem dois tipos de compressão~\cite{sayood2017introduction}: com perdas e sem perdas. A compressão com perdas (\textit{lossy}) potencializa uma melhor taxa de compressão em troca de perda de informação enquanto na compressão sem perdas (\textit{lossless}) não há perda de informação. Esta última é requerida em algumas aplicações, como sinais biomédicos. No contexto de imagens digitais, a compressão sem perdas permite que, após a codificação da imagem, a imagem decodificada seja idêntica à original, enquanto na compressão com perdas a imagem decodificada não é idêntica à original e há perda de qualidade visual.
 
@@ -27,7 +27,6 @@ Assim como os outros codecs, o \textit{JPEG} explora as características imperfe
 
 Os algoritmos de compressão existentes atualmente podem estar longe de serem os ideais para os novos formatos de mídia como vídeos em 360 graus ou conteúdos de realidade virtual. Enquanto um desenvolvimento de um novo codec pode levar anos, um \textit{framework} de compressão de imagens mais geral baseado em redes neurais pode ser capaz de se adaptar mais rápido à estas diferentes tarefas e ambientes.
 
-
 Algoritmos padrão de compressão de imagens tendem a fazer suposições sobre a escala da imagem. Por exemplo, usualmente assume-se que um \textit{patch} (pedaço retangular da imagem) de uma imagem natural de alta resolução irá conter muita informação redundante. De fato, quanto maior a resolução da imagem, mais provável que a maior parte dos \textit{patches} que a compõem conterão informação de baixa frequência onde não há muita variação nos valores dos pixels. Esse fato é explorado pela maior parte dos codecs de imagens, de modo que eles tendem a ser muito eficientes em comprimir imagens de alta resolução. Entretanto, tais suposições são invalidadas ao criar miniaturas de imagens naturais de alta resolução, visto que um \textit{patch} obtido de uma miniatura pode conter informação de alta frequência que é mais difícil de ser comprimida por estes algoritmos.
 Nos últimos anos, redes neurais profundas se tornaram a base dos resultados do estado da arte para reconhecimento de imagens~\cite{simonyan}, detecção de objetos~\cite{girshick2014rich}, reconstrução tridimensional de objetos~\cite{choy20163d}, reconhecimento de faces~\cite{deepface}, reconhecimento de discurso~\cite{graves}, \textit{machine translation}~\cite{sequence}, geração de legendas de imagens~\cite{vinyals2015show}, tecnologia de carros autônomos~\cite{huval2015empirical}, entre outros. 
 
@@ -37,9 +36,9 @@ Nos últimos anos, redes neurais profundas se tornaram a base dos resultados do 
 \label{sec:hipotese}
 Compressão de imagens usando redes neurais tem sido uma área ativa de pesquisa em tempos recentes com vários desafios a serem enfrentados para que essas técnicas sejam competitivas com os codificadores clássicos. Serão verificadas as seguintes hipóteses:
 \begin{itemize}
-    \item Se modelos baseados em \textit{autoencoders} convolucionais são competitivos com os clássicos codecs \textit{JPEG} e \textit{JPEG2000} para imagens com muito conteúdo de alta frequência;
-    \item Se usar imagens que codificadores clássicos têm dificuldade para comprimir para treinamento do modelo é benéfico para os resultados dele;
+    \item Se modelos baseados em \textit{autoencoders} convolucionais recorrentes são competitivos com os clássicos codecs \textit{JPEG} e \textit{JPEG2000} para imagens com muito conteúdo de alta frequência;
     \item Se o codificador de entropia utilizado no latente será capaz de comprimir em proporções semelhantes para todos os níveis de resíduos;
+    \item Se usar imagens que codificadores clássicos têm dificuldade para comprimir para treinamento do modelo é benéfico para os resultados dele;
     \item Se há um grande impacto nos resultados ao usar funções de perdas variadas;
     \item Se os resultados dos \textit{autoencoders} serão melhores ao trabalhar com um diferente domínio para os dados de entrada, um que beneficie o processo de aprendizagem via atualização de gradientes. Ou seja, se é benéfico para o desempenho do modelo aplicar uma transformação nos dados de entrada que evite problemas como gradientes muito pequenos;
 \end{itemize}
@@ -48,7 +47,7 @@ Estas verificações serão dadas usando-se métricas visuais objetivas e as ima
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Objetivos}
 \label{sec:objetivos}
-Deseja-se construir e avaliar o desempenho de um \textit{framework} de compressão de imagens ponta a ponta (modelagem e codificação) usando \textit{autoencoders} empilhados convolucionais recorrentes com o auxílio de um codificador de entropia para comprimir o código.
+Deseja-se construir e avaliar o desempenho de um \textit{framework} de compressão de imagens ponta a ponta (modelagem e codificação) usando \textit{autoencoders} empilhados convolucionais recorrentes com o auxílio de um codificador de entropia para comprimir o latente binarizado gerado pelo \textit{encoder}. 
 
 Para isto serão estudadas propostas de compressão de imagens na literatura, de modo a obter estatísticas e informações para guiar a escolha e implementação de codificadores baseados em autoencoders que estendam a estrutura básica de um autoencoder, gerando uma representação binária para a imagem ao quantizar a camada de gargalo ou as variáveis latentes correspondentes. Esta representação binária será ainda comprimida usando um codificador de entropia. Também serão construídas bases de dados próprias, a partir de bases de dados comumente utilizadas para esse problema, para que seja avaliado o desempenho, à diferentes taxas, de \textit{autoencoders} convolucionais e dos codecs \textit{JPEG} e \textit{JPEG2000} nas mais variadas imagens. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

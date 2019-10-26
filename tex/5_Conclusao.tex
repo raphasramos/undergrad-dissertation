@@ -1,17 +1,19 @@
-Este capítulo mostra o que se alcançou com os objetivos. É feita uma análise crítica na seção~\ref{sec:analise} para verificar a completude dos objetivos propostos pelo trabalho. A seção~\ref{sec:futuro} indica as perspectivas futuras e os próximos passos a serem dados. A seção~\ref{sec:limitacoes} aborda as limitações enfrentadas durante o desenvolvimento do trabalho.
+Este capítulo mostra o que se alcançou com os objetivos. É feita uma análise crítica na seção~\ref{sec:analise} para verificar a completude dos objetivos propostos pelo trabalho. A seção~\ref{sec:limitacoes} aborda as limitações enfrentadas durante o desenvolvimento do trabalho.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Limitações do Trabalho}
 \label{sec:limitacoes}
 Modelos baseados em redes neurais para compressão de imagens precisam de muitas imagens para serem treinadas e possuem custo computacional superior aos codecs clássicos para codificar e decodificar imagens. Métodos baseados em redes neurais possuem o potencial de suprir uma necessidade crescente por algoritmos de compressão com perdas flexíveis. Entretanto, compressão com perdas é uma problema não diferenciável. Em particular, quantização é uma parte integral do \textit{pipeline} de compressão mas não é diferenciável, o que dificulta o trabalho de treinar redes neurais para esta tarefa.
 %%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fazer uma análise crítica mais detalhada falando sobre cada objetivo (talvez hipótese)
 \section{Análise Crítica}
 \label{sec:analise}
 Neste trabalho, não foi proposto um novo método para comprimir imagens mas foram replicadas técnicas já existentes na literatura alcançando resultados razoáveis para um trabalho que tinha como principal objetivo se familiarizar com a literatura e propor combinações de técnicas de \textit{deep learning} e compressão de imagens já existentes. As seguintes conclusões podem ser tiradas:
 \begin{itemize}
-    \item É possível concluir que o \textit{GZIP} não está ajudando muito após a primeira iteração. Portanto, seria necessário desenvolver um codificador de entropia específico para esta tarefa ou alterar a arquitetura do modelo para tentar fazer com que os latentes binarizados sejam mais adequados para o codificador.
-    \item É possível notar um impacto positivo em diferentes aspectos com o uso de diferentes funções de perdas, o que abre um espaço de exploração interessante para ser avaliado.
-    \item Utiliza-se a mesma quantidade de bits para os mais diversos \textit{patches}, o que não é uma boa abordagem do ponto de vista de compressão visto que seria possível utilizar menos bits para \textit{patches} mais fáceis e mais bits para \textit{patches} mais difíceis. 
+    \item É possível concluir que o \textit{GZIP} não está comprimindo muito após a primeira iteração. Portanto, seria necessário desenvolver um codificador de entropia específico para esta tarefa ou alterar a arquitetura do modelo para tentar fazer com que os latentes binarizados sejam mais adequados para o codificador.
+    \item É possível notar que os modelos baseados em redes neurais são melhores do que os codecs clássicos para imagens com alto conteúdo de alta frequência. 
+    \item É possível notar um impacto razoável em diferentes aspectos com o uso de diferentes funções de perdas, o que abre um espaço de exploração interessante para ser avaliado.
+    \item Utiliza-se a mesma quantidade de bits para os mais diversos \textit{patches}, o que não é uma boa abordagem do ponto de vista de compressão visto que seria possível utilizar menos bits para \textit{patches} mais fáceis e mais bits para \textit{patches} mais difíceis.
 \end{itemize}
 
 Existe uma necessidade de desenvolver outros métodos para que seja possível superar os \textit{codecs} clássicos no âmbito do tema deste trabalho. Portanto, ainda há muito espaço para novas soluções no problema abordado, conforme apresentado anteriormente.
