@@ -136,7 +136,7 @@
 {
 Universidade de Brasília \\ % Your institution for the title page
 \medskip
-\textit{raphael.soares.1996@gmail.com} % Your email address
+\textit{raphael.soares@nubank.com.br} % Your email address
 }
 \date{\today} % Date, can be changed to a custom date
 
@@ -174,34 +174,8 @@ Universidade de Brasília \\ % Your institution for the title page
 \item Processo de codificar uma determinada informação utilizando uma menor representação.
 \item Arte ou ciência de representar informação de forma compacta~\cite{book_compression}.
 \item Representações compactas são criadas identificando e usando estruturas existentes nos dados para que seja possível extrair redundâncias nos dados~\cite{book_compression}.
+\item Dois tipos: com perda ($x \neq \hat{x}$) e sem perda ($x = \hat{x}$).
 \end{itemize}
-\end{frame}
-%------------------------------------------------
-\begin{frame}
-\frametitle{Tipos de Compressão}
-\begin{itemize}
-\item Sem perdas (Lossless):
-\begin{itemize}
-\item $x = \hat{x}$
-\end{itemize}
-\item Com perdas (Lossy):
-\begin{itemize}
-\item $x \neq \hat{x}$
-\end{itemize}
-\end{itemize}
-\begin{tikzpicture}[node distance = 2.5cm, auto]
-    % Place nodes
-    \node [block] (input) {Sinal de entrada x};
-    \node [block, right of=input] (coder) {Codificador};
-    \node [block, right of=coder] (code) {Sinal codificado};
-    \node [block, right of=code] (decoder) {Decodifi-\\cador};
-    \node [block, right of=decoder] (output) {Sinal decodificado $\hat{x}$};
-    % Draw edges
-    \path [line] (input) -- (coder);
-    \path [line] (coder) -- (code);
-   	\path [line] (code) -- (decoder);
-    \path [line] (decoder) -- (output);
-\end{tikzpicture}   
 \end{frame}
 %------------------------------------------------
 \subsection{Motivação}
@@ -234,6 +208,7 @@ Universidade de Brasília \\ % Your institution for the title page
 \begin{itemize}
     \item Exploram características imperfeitas da nossa percepção e propriedades estatísticas para fornecer resultados superiores quando comparados com métodos de compressão de dados genéricos.
     \item Examinada durante anos por pesquisadores e times como o \textit{Joint Pictures Experts Group}.
+    \item Duas fases: modelagem (descrever redundâncias em forma de um modelo) e codificação (codificar descrição do modelo e de como os dados diferem do modelo).
     \item Alguns métodos de compressão:
     \begin{enumerate}
     \item JPEG~\cite{jpeg}
@@ -243,39 +218,17 @@ Universidade de Brasília \\ % Your institution for the title page
     \end{enumerate}
 \end{itemize}
 \end{frame}
-%--------------------------------------------------
-\begin{frame}
-\frametitle{Elementos da Percepção Visual}
-\begin{figure}
-\includegraphics[width=0.4\textwidth]{figs/human_eye.pdf}
-\caption{O olho humano é capaz de discriminar o brilho de uma imagem muito mais facilmente do que a sua informação de cor, pois existem cerca de 120 à 150 milhões de bastonetes distribuídos sobre a superfície da retina contra apenas 6 à 7 milhões de cones. Fonte:~\cite{ipi}}
-\end{figure}
-\end{frame}
-%--------------------------------------------------
-\begin{frame}
-\frametitle{Elementos da Percepção Visual}
-\begin{figure}
-\includegraphics[width=\textwidth]{figs/image_comparison.png}
-\caption{Imagem original 512x768 à esquerda (retirada de~\href{http://r0k.us/graphics/kodak/}{Kodak}) sem compressão e imagem (direita) gerada a partir da imagem original com dimensionalidade nos canais de crominância reduzida por um fator de 8 nas duas direções. Economia total de 2.1875 Kbytes para armazenamento!}
-\label{fig:image_comp}
-\end{figure}
-\end{frame}
-%--------------------------------------------------
-\begin{frame}
-\frametitle{Elementos da Percepção Visual}
-\begin{figure}
-\includegraphics[width=\textwidth]{figs/zoom_image.png}
-\caption{Versão com zoom da Figura~\ref{fig:image_comp}. Aqui é possível notar artefatos existentes devido à perda de informação.}
-\end{figure}
-\end{frame}
 %------------------------------------------------
 \subsection{Hipótese}
 %------------------------------------------------
 \begin{frame}
 \frametitle{Hipótese}
 \begin{itemize}
-\item Nos últimos anos redes neurais profundas se tornaram a base dos resultados do estado da arte para diversas áreas
-\item Deseja-se verificar se modelos baseados em \textit{autoencoders} convolucionais são competitivos com o clássico codec (codificador e decodificador) \textit{JPEG}.
+\item Se modelos baseados em \textit{autoencoders} convolucionais recorrentes são competitivos com os clássicos codecs \textit{JPEG} e \textit{JPEG2000} para imagens com muito conteúdo de alta frequência;
+\item Se o codificador de entropia utilizado no latente será capaz de comprimir em proporções semelhantes para todos os níveis de resíduos;
+\item Se usar imagens que codificadores clássicos têm dificuldade para comprimir para treinamento do modelo é benéfico para os resultados dele;
+\item Se há um grande impacto nos resultados ao usar funções de perdas variadas;
+\item Se os resultados dos \textit{autoencoders} serão melhores ao trabalhar com um diferente domínio para os dados de entrada, um que beneficie o processo de aprendizagem via atualização de gradientes. Ou seja, se é benéfico para o desempenho do modelo aplicar uma transformação nos dados de entrada que evite problemas como gradientes muito pequenos;
 \end{itemize}
 \end{frame}
 %--------------------------------------------------
@@ -284,10 +237,10 @@ Universidade de Brasília \\ % Your institution for the title page
 \begin{frame}
 \frametitle{Objetivos gerais e específicos}
 \begin{itemize}
-\item Foi proposto um \textit{autoencoder} convolucional que estenda a estrutura básica de um \textit{autoencoder}, gerando uma representação binária para a imagem.
-\item Estudar propostas de compressão de imagens na literatura.
-\item Avaliar o desempenho dos modelos propostos e do \textit{JPEG} em imagens de baixa resolução espacial.
-\end{itemize} 
+\item Deseja-se construir e avaliar o desempenho de um framework de compressão de imagens
+ponta a ponta (modelagem e codificação) usando autoencoders empilhados convolucionais
+recorrentes com o auxílio de um codificador de entropia para comprimir o código.
+\end{itemize}
 \end{frame}
 %------------------------------------------------------
 \section{Fundamentação Teórica}
@@ -352,14 +305,6 @@ Universidade de Brasília \\ % Your institution for the title page
 \end{figure}
 \end{frame}
 %------------------------------------------------------
-\begin{frame}
-\frametitle{O problema com o JPEG}
-\begin{figure}
-\includegraphics[width=\textwidth]{figs/text_jpeg.png}
-\caption{Imagem de texto com e sem compressão. Fonte:~\cite{text_jpeg}}
-\end{figure}
-\end{frame}
-%------------------------------------------------------
 \subsection{Redes Neurais}
 %------------------------------------------------------
 \begin{frame}
@@ -373,31 +318,6 @@ Universidade de Brasília \\ % Your institution for the title page
 \item \textit{Deep learning} resolve o problema de \textit{representation learning} introduzindo representações que são expressadas em termos de outras representações mais simples.
 \end{itemize} 
 \end{frame}
-
-%------------------------------------------------------
-\begin{frame}
-\frametitle{Conceitos Básicos}
-\begin{itemize}
-\item Redes neurais são algoritmos de \textit{deep learning} capazes de fazer predições aprendendo uma função que relaciona as características dos dados à respostas observadas/desejadas
-\begin{enumerate}
-\item Aproximadores universais de funções~\cite{nn_book}.
-\item Funções de ativações permitem aprendizado de funções mais complexas. Mais comum é a \textit{ReLU}.
-\begin{figure}
-\includegraphics[width=0.7\textwidth]{figs/xor.pdf}
-\caption{Um modelo linear aplicado diretamente à entrada original não pode implementar a função XOR. Fonte:~\cite{dl_book}}
-\end{figure}
-\end{enumerate}
-\end{itemize}
-\end{frame}
-%------------------------------------------------------
-\begin{frame}
-\frametitle{Taxa de Aprendizagem}
-\begin{equation} lr = baselr + (maxlr-baselr) max(0,\, 1-|itr/step - 2cycle + 1|) \gamma^{itr} \end{equation}
-\begin{figure}
-\includegraphics[width=\textwidth]{figs/exp.png}
-\caption{Política exp\_range de \textit{learning rate} cíclica definida por~\cite{clr}. Fonte:~\cite{exp}}
-\end{figure}
-\end{frame}
 %-----------------------------------------------------
 \begin{frame}
 \frametitle{Convoluções}
@@ -409,18 +329,10 @@ Universidade de Brasília \\ % Your institution for the title page
 \end{frame}
 %------------------------------------------------------
 \begin{frame}
-\frametitle{Redes Neurais Convolucionais}
-\begin{figure}
-\includegraphics[width=\textwidth]{figs/convnet.jpeg}
-\caption{Ilustração de uma rede neural convolucional. Fonte:~\cite{cnn}}
-\end{figure}
-\end{frame}
-%------------------------------------------------------
-\begin{frame}
 \frametitle{Autoencoder}
 \begin{figure}
-\includegraphics[width=\textwidth]{figs/ae-architecture.png}
-\caption{Ilustração de um \textit{autoencoder}. Fonte:~\cite{ae}}
+\includegraphics[width=0.8\textwidth]{figs/autoencoder.pdf}
+\caption{Ilustração de um \textit{autoencoder}.}
 \end{figure}
 \end{frame}
 %------------------------------------------------------
@@ -685,10 +597,6 @@ b^{inf}(x) = \begin{cases}
 \newblock Wikimedia Commons, The Free Media Repository
 \newblock In: \href{https://commons.wikimedia.org/w/index.php?curid=10414002}{DCT Figure}
 
-\bibitem[Mike Pound et. al 2015]{text_jpeg} Mike Pound - Computerphile
-\newblock The Problem with JPEG - Computerphile
-\newblock In: \href{https://youtu.be/yBX8GFqt6GA?t=48}{Computerphile Video}
-
 \bibitem[Leslie et. al 2017]{clr} Leslie N. Smith
 \newblock Cyclical Learning Rates for Training Neural Networks
 \newblock In: Proceedings - IEEE Winter Conference on Applications of Computer Vision
@@ -696,10 +604,6 @@ b^{inf}(x) = \begin{cases}
 \bibitem[Brad Kenstler et. al 2015]{exp} Brad Kenstler
 \newblock Cyclical Learning Rate (CLR)
 \newblock In: \href{https://github.com/bckenstler/CLR/}{GitHub Repository}
-
-\bibitem[Lilain Weng et.al 2018]{ae} Lilian Weng
-\newblock From Autoencoder to Beta-VAE
-\newblock In: \href{https://lilianweng.github.io/lil-log/2018/08/12/from-autoencoder-to-beta-vae.html}{Blog}
 
 \bibitem[CS231n Course Materials 2019]{cnn} CS231n
 \newblock CS231n Convolutional Neural Networks for Visual Recognition
