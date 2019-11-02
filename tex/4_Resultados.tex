@@ -101,7 +101,7 @@ Para este modelo foram usadas as bases \textbf{BD2}, \textbf{BD3} e \textbf{BD4}
 \textbf{9}     & $1.125$ &  $0.92177$ &  $1.10$  &  $0.92177$        &  $1.10$  &  $0.90873$     &  $1.10$  &  $0.91981$       \\ 
 \textbf{10}    & $1.250$ &  $0.92873$ &  $1.23$  &  \textbf{0.92873}        &  $1.22$  &  $0.91712$     &  $1.21$  &  $0.92769$       \\ \hline}
 
-\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e MSSSIM do Modelo 4, JPEG e JPEG2000 para a base~\cite{kodak}}{tab:mod4_msssim}{|c |c c |c c|c c| c c| }{\cline{2-9}
+\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e \acrshort{MS-SSIM} do Modelo 4, JPEG e JPEG2000 para a base~\cite{kodak}}{tab:mod4_msssim}{|c |c c |c c|c c| c c| }{\cline{2-9}
 \multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Network} & \multicolumn{2}{c|}{Network + GZIP} & \multicolumn{2}{c|}{JPEG} & \multicolumn{2}{c|}{JPEG 2000} \\ \hline
   \textbf{Nível} & Taxa & MS & Taxa & MS & Taxa & MS & Taxa & MS \\ \hline	
   \textbf{1}     & $0.125$ &  $0.84270$  &  $0.10$  &  $0.84270$       &  $0.17$  &  $0.71702$    &  $0.10$  &  $0.88245$      \\ 
@@ -168,7 +168,7 @@ Considerando os resultados anteriores obtidos para as imagens kodim05 e kodim09,
 \textbf{9}     & $1.125$ & $0.91092$ & $1.09$ & $0.91092$      & $1.10$ & $0.88800$   & $1.08$ & $0.90109$     \\ 
 \textbf{10}    & $1.250$ & $0.91784$  & $1.20$ & \textbf{0.91784}      & $1.21$ & $0.89648$   & $1.20$ & $0.90973$  \\ \hline}
 
-\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e MSSSIM do Modelo 4, JPEG e JPEG2000 para 47 imagens da base~\cite{kodak} e~\cite{clic} com muito conteúdo de alta frequência}{tab:mod4_hf_msssim}{|c |c c |c c|c c| c c| }{\cline{2-9}
+\tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e \acrshort{MS-SSIM} do Modelo 4, JPEG e JPEG2000 para 47 imagens da base~\cite{kodak} e~\cite{clic} com muito conteúdo de alta frequência}{tab:mod4_hf_msssim}{|c |c c |c c|c c| c c| }{\cline{2-9}
 \multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Network} & \multicolumn{2}{c|}{Network + GZIP} & \multicolumn{2}{c|}{JPEG} &\multicolumn{2}{c|}{JPEG 2000} \\ \hline
 \textbf{Nível} & Taxa & MS & Taxa & MS & Taxa & MS & Taxa & MS \\ \hline	
 \textbf{1}     & 0.10 & 0.84156     & 0.10 & 0.84156      & 0.17 & 0.72882   & 0.10 & 0.87953     \\ 
@@ -190,7 +190,7 @@ Pelas~\refFigs{kodim05_3_net}{kodim05_3_jpeg2k} é possível notar o que as~\ref
 
 Para taxas muito baixas é possível notar uma grande dificuldade do \textbf{JPEG} em comprimir para a~\refFig{kodim05} mesmo com uma taxa maior, conforme mostra as~\refFigs{kodim05_0_net}{kodim05_0_jpeg2k}. Essa taxa corresponde ao primeiro nível de resíduo para o Modelo 4.
 
-\figura[!htbp]{kodim05_0_net}{Imagem~\refFig{kodim05} reconstruída pelo Modelo 4 à uma taxa de 0.12 bits por pixel.}{kodim05_0_net}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_0_net}{Imagem~\refFig{kodim05} reconstruída pelo Modelo 4 à uma taxa de 0.12 bits por pixel}{kodim05_0_net}{width=0.7\textwidth}
 \figura[!htbp]{kodim05_0_jpeg}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG} à uma taxa de 0.21 bits por pixel.}{kodim05_0_jpeg}{width=0.7\textwidth}
 \figura[!htbp]{kodim05_0_jpeg2k}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG2000} à uma taxa de 0.12 bits por pixel}{kodim05_0_jpeg2k}{width=0.7\textwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -198,13 +198,18 @@ Para taxas muito baixas é possível notar uma grande dificuldade do \textbf{JPE
 \label{res:6levels}
 Esses três modelos foram treinados com 150000 iterações nas bases \textbf{BD2} e \textbf{BD4}. Foram utilizados 6 níveis de resíduos. 
 
-% Colocar os plots de comparação dos modelos treinados usando mse, ssim e pseudo-variacional loss.
-A função de loss utilizada no Modelo x é \equacao{loss}{Ke^{(-0.07r)}Q} onde $K = 3.5 \times 10^{-7}$ e $Q$ é a quantidade de bits 1 no latente binarizado. Com esta função de \textit{loss} há uma penalização na ocorrência do bit 1 o que leva a uma diminuição da entropia do latente binarizado. Espera-se que o codificador de entropia seja mais eficaz dessa forma.
+A função de loss utilizada no Modelo 5 é a \acrshort{MSE}. 
 
-A função de loss utilizada no Modelo x+1 é \equacao{loss_ssim}{1 - SSIM(x, \hat{x})}, visto que a \acrshort{SSIM} é um valor entre 0 e 1 diretamente proporcional à qualidade visual da imagem reconstruída a partir do latente binarizado $\hat{x}$.  
+% Colocar os plots de comparação dos modelos treinados usando mse, ssim e pseudo-variacional loss.
+A função de loss utilizada no Modelo 6 é \equacao{loss}{Ke^{(-0.07r)}Q} onde $K = 3.5 \times 10^{-7}$ e $Q$ é a quantidade de bits 1 no latente binarizado. Com esta função de \textit{loss} há uma penalização na ocorrência do bit 1 o que leva a uma diminuição da entropia do latente binarizado. Espera-se que o codificador de entropia seja mais eficaz dessa forma.
+
+Os resultados são mostrados nas~\refFigs{_mean_plot_loss_psnr}{_mean_plot_loss_msssim}. Foram feitos alguns testes variando o conjunto de treino e o de teste com ambos os modelos. A média obtida pelo modelo 5 foi 30.23 dB de \acrshort{PSNR} e 0.86340 à uma taxa de 0.71 bpp. A média obtida pelo modelo 6 obteve 30.31 dB de \acrshort{PSNR} e 0.86498 de \acrshort{SSIM} à uma taxa de 0.71 bpp.
+
+\figura[!htbp]{_mean_plot_loss_psnr}{Comparação do Modelo 5 e 6 para a métrica \acrshort{MSE}}{_mean_plot_loss_psnr}{width=0.7\textwidth}
+\figura[!htbp]{_mean_plot_loss_ssim}{Comparação do Modelo 5 e 6 para a métrica \acrshort{SSIM}}{_mean_plot_loss_ssim}{width=0.7\textwidth}
+\figura[!htbp]{_mean_plot_loss_msssim}{Comparação do Modelo 5 e 6 para a métrica \acrshort{MS-SSIM}}{_mean_plot_loss_msssim}{width=0.7\textwidth}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Modelos 8, 9 e 10}
-% Colocar os plots de comparação dos modelos treinados usando diferentes ranges de entrada
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Comparar ganhos obtidos pelo GZIP nos modelos com diferentes funções de loss 
