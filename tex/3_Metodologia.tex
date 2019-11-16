@@ -1,54 +1,22 @@
-Este capítulo apresenta a metologia seguida para a verificação das hipóteses, incluindo o modelo construído e os \textit{datasets} utilizados. Os modelos foram construídos usando o \textit{framework} PyTorch~\cite{pytorch} e avaliados usando métricas visuais: \acrshort{PSNR}, \acrshort{SSIM} e \acrshort{MS-SSIM}. Também foi avaliada a quantidade de bits por pixel da imagem decodificada.
+Este capítulo apresenta a metologia seguida para a verificação das hipóteses, incluindo o modelo construído e os conjunto de dados utilizados. Os modelos foram construídos usando o \textit{framework} PyTorch~\cite{pytorch} e avaliados usando métricas visuais: \acrshort{PSNR}, \acrshort{SSIM} e \acrshort{MS-SSIM}. Também foi avaliada a quantidade de bits por pixel da imagem decodificada.
 
-\section{Bases de Dados}%
-Foram utilizadas, principalmente, cinco bases de dados para o treinamento do modelo proposto, construídas usando as imagens das seguintes bases de dados:
-\begin{enumerate}
-    \item \emph{\acrshort{CLIC}}~\cite{clic}. Deste \textit{dataset} foram pegos 4 conjuntos com os seguintes nomes e tamanhos:
-    \begin{enumerate}
-        \item Professional valid: 41 imagens;
-        \item Professional train: 585 imagens;
-        \item Mobile valid: 61 imagens;
-        \item Mobile train: 1048 imagens;
-    \end{enumerate}
-    \item \emph{\acrshort{DIV2K}}~\cite{div2k}. Deste \textit{dataset} foram pegos 2 conjuntos com os seguintes nomes e tamanhos:
-    \begin{enumerate}
-        \item Train: 800 imagens;
-        \item Valid: 100 imagens;
-    \end{enumerate}
-    \item \emph{\acrshort{EYE}}~\cite{ultra_eye}. Deste \textit{dataset} foram pegos 2 conjuntos com os seguintes nomes e tamanhos:
-    \begin{enumerate}
-        \item HD: 38 imagens;
-        \item UHD: 40 imagens;
-    \end{enumerate}
-\end{enumerate}
-Também foi utilizada a base~\cite{kodak} e o conjunto \textit{Mobile test} da base \acrshort{CLIC} para teste. Todas as imagens usadas são de alta qualidade (sem ruído, boa iluminação, alta nitidez), sendo que as imagens \textit{professional} possuem qualidade maior que as {mobile}. A base \acrshort{EYE} consiste de imagens naturais de alta qualidade e resolução adquiridas usando várias câmeras. As imagens cobrem uma quantidade variada de cenas, incluindo cenas ao ar livre e interiores, imagens da natureza, pessoas, animais e cenas históricas retratadas em pinturas. As imagens das bases \acrshort{DIV2K} e \acrshort{EYE} têm resolução maior que as do \acrshort{CLIC}, entretanto isso não faz muita diferença visto que são usados patches com 32 pixels de largura e altura na rede.
-
-Primeiramente, todas as imagens foram separadas em \textit{patches} com 32 pixels de largura e altura, resultando em 6,231,440 \textit{patches}. Cada imagem foi codificada sem perdas no formato \acrshort{PNG}, e o tamanho de cada arquivo é usado como critério para a entropia do \textit{patch} (\textit{patches} com tamanhos menores são considerados como sendo de ``baixa entropia''). O histograma da base de dados completa é mostrado na~\refFig{hist_all}.
-\figura[!htb]{hist_all}{Histograma da base de dados completa formada por 6,231,440 de patches}{hist_all}{width=\textwidth}
-Foram geradas cinco base de dados com cerca de 1.25 milhões de \textit{patches} em cada uma. Para cada base é pego um subconjunto do total de \textit{patches}.
-
-Cada base de dados tem características específicas e entendê-las é um fator essencial para avaliar o modelo proposto e o impacto de métodos e hiperparâmetros diferentes nos resultados. As bases, nomeadas $BDi,\, i \in \{0,\cdots,4\}$, possuem as seguintes características:
-\begin{itemize}
-    \item \textbf{BD0}: formada por 1248978 de \textit{patches} que pertencem ao grupo dos 20\% com menor entropia;
-    \item \textbf{BD1}: formada por 1251421 de \textit{patches} que pertencem ao grupo dos que estão na faixa 40\% à 60\% (porcentagem dada de acordo com o \textit{patch} com maior entropia);
-    \item \textbf{BD2}: formada por 1248725 de \textit{patches} que pertencem ao grupo dos 20\% com maior entropia;
-    \item \textbf{BD3}: formada por 1247033 de \textit{patches} pegos de forma aleatória. Correspondem à 20\% do total.
-    \item \textbf{BD4}: formada por 1246698 de \textit{patches}. 20\% do total retirados aleatoriamente dos 50\% dos \textit{patches} com maior entropia.
-\end{itemize}
-Por construção, não há sobreposição entre as bases de dado 0, 1 e 2, mas existe sobreposição destas bases com as bases 3 e 4. Um histograma de cada base~[\refFigs{hist0}{hist4}] é dado.
-\figura[!htb]{hist0}{Histograma da \textbf{BD0}}{hist0}{width=\textwidth}
-\figura[!htb]{hist1}{Histograma da \textbf{BD1}}{hist1}{width=\textwidth}
-\figura[!htb]{hist2}{Histograma da \textbf{BD2}}{hist2}{width=\textwidth}
-\figura[!htb]{hist3}{Histograma da \textbf{BD3}}{hist3}{width=\textwidth}
-\figura[!htb]{hist4}{Histograma da \textbf{BD4}}{hist4}{width=\textwidth}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelos desenvolvidos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Foram testados \textit{autoencoders} convolucionais com o objetivo de avaliar o potencial de cada um nas bases de dados propostas. O primeiro não possui binarização/quantização no latente gerado pelo \textit{encoder}. O segundo incorpora o binarizador (representado com um trapézio nas figuras) baseado no do \textit{Toderici} usando $\hat{b}(x)$. O Modelo 3 corresponde ao modelo não recursivo convolucional usando apenas um nível de resíduo. Os últimos são os modelos convolucionais recursivos propostos por \textit{Toderici} em~\cite{Variable2016Toderici} com a utilização de $\hat{b}(x)$ e de um codificador de entropia, de modo que se alguma redundância ainda for encontrada no latente a lógica é que o codificador irá explorá-la de alguma forma, reduzindo o tamanho do \textit{bitstream} comprimido. Os Modelos 4 em diante são os recursivos convolucionais usando LSTM. Os Modelos 5, 6 e 7 são comparados utilizando \textit{K-fold Cross-Validation} que é uma técnica onde o \textit{dataset} é dividido em \textit{k} grupos e cada grupo único $x_i, i \in {1 \dots k}$ é usado como conjunto de teste para os outros $k-1$ grupos usados como treino nesta rodada. 
+Foram testados \textit{autoencoders} convolucionais com o objetivo de avaliar o potencial de cada um nas bases de dados propostas e qual o impacto de cada uma nos resultados do modelo. Os modelos são apresentados no próximo capítulo. O primeiro modelo é não recursivo, não realiza compressão e não possui binarização/quantização no latente gerado pelo \textit{encoder}. Os últimos são os modelos recursivos convolucionais usando \acrshort{LSTM} propostos por \textit{Toderici} em~\cite{toderici2016} com a utilização do binarizador e de um codificador de entropia, de modo que se alguma redundância ainda for encontrada no latente a lógica é que o codificador irá explorá-la de alguma forma, reduzindo o tamanho do \textit{bitstream} comprimido. Os Modelos 3 e 4 são comparados utilizando \textit{K-fold Cross-Validation} que é uma técnica onde o conjunto de dados é dividido em \textit{k} grupos e cada grupo único $x_i, i \in {1 \dots k}$ é usado como conjunto de teste para os outros $k-1$ grupos usados como treino nesta rodada. 
 
 Pode-se pensar que estes últimos modelos realizam o trabalho de transformação e quantização, empacotando e descartando informação, e que o codificador de entropia irá finalizar o trabalho, explorando alguma redundância ainda não explorada.
 
+\subsection{Modelo 1}
+Este primeiro modelo foi desenvolvido com o objetivo de avaliar o potencial de um \textit{autoencoder} convolucional simples sem camada de gargalo com binarizador/quantizador. Aqui, o armazenamento da imagem codificada pelo \textit{encoder} seria custoso, visto que não há binarização. Portanto, o objetivo é apenas avaliar a distorção das imagens reconstruídas. A arquitetura é ilustrada na~\refFig{conv_ae}.
+\figura[!htb]{conv_ae}{Ilustração do \textit{autoencoder} mais básico desenvolvido. Os retângulos indicam as convoluções e os retângulos arredondados indicam as convoluções transpostas. O tamanho do \textit{kernel} é indicado na primeira linha do retângulo. A segunda linha informa o número de filtros (canais de saídas). A última linha indica o tamanho (igual nas duas direções) do \textit{stride} utilizado e a função de ativação. A última camada do \textit{decoder} (convolução transposta) de cada um dos modelos é usada para recuperar a informação de cor}{conv_ae}{width=\textwidth}
+\subsection{Modelos 2 e 3}
+Esses modelos seguem a arquitetura proposta por Toderici~\cite{toderici2016} apresentado na~\refFig{toderici_2} com 6 níveis de resíduos. 
+
+A função de custo utilizada no Modelo 2 é a \acrshort{MSE}. 
+
+Foi proposta a seguinte função de custo para o Modelo 3: \equacao{loss}{MSE + Ke^{(-0.07r)}Q,} onde $K = 3.5 \times 10^{-7}$ $Q$ é a quantidade de bits 1 no latente binarizado e $r \in \{1, \cdots 6\}$ é o nível de resíduo. A ideia é realizar uma otimização não só da distorção, mas também penalizar a taxa ($R$ na equação~\refEq{optimization}). Com esta função de custo há uma penalização na ocorrência do bit 1 o que leva a uma diminuição da entropia do latente binarizado. Os \textit{bitstreams} correspondentes aos níveis superiores possuem um menor impacto no valor da taxa, pois esta abordagem se mostrou melhor em testes realizados e acredita-se que níveis superiores da arquitetura gere \textit{bitstreams} mais precisos. Espera-se que o codificador de entropia seja mais eficaz dessa forma, pois tende-se a ter um \textit{bitstream} menos complexo.
+\subsection{Modelo 4}
+Para este modelo (o recursivo convolucional do Toderici~\cite{toderici2016} apresentado na~\refFig{toderici_2}) foram usadas as bases \textbf{BD2}, \textbf{BD3} e \textbf{BD4} como treino. O modelo foi testado em duas bases: Kodak~\cite{kodak} e Clic~\cite{clic}. O modelo possui 10 níveis de resíduos e foi treinado por 500 mil iterações.
 \subsection{Formando o Bitstream}
 É importante descrever como o \textit{bitstream} é formado quando se aplica o binarizador $B$. Em todos os modelos, a imagem é dividida em \textit{patches} de tamanho 32x32 \textit{pixels}. Assim, se uma imagem possuir 9 \textit{patches}, ela terá um \textit{bitstream} para cada latente de cada \textit{patch} e o \textit{bitstream} da imagem será dado pela concatenação dos \textit{bitstreams} de cada patch. 
 
@@ -56,22 +24,54 @@ Para cada um desses \textit{patches}, o modelo é treinado de maneira residual c
 
 Os latentes são concatenados de modo que para o nível $n$ tem-se $n$ latentes binarizados concatenados. Assim, para o nível 1 tem-se o \textit{bitstream} $b_1$ correspondente ao latente binarizado do nível 1, para o nível 2 tem-se o \textit{bitstream} $b_1 + b_2$, e assim em diante. De maneira geral, para o nível $n$ tem-se $b_1 + b_2 + \dots + b_n$, onde $+$ denota a concatenação de \textit{bitstreams}. 
 
-Do modelo 4 em diante foi usado o \textit{gzip} (codificador de entropia) no latente com o objetivo de reduzir a taxa de bits por pixel.
-
-Nas seguintes subseções são apresentadas as ilustrações de algumas arquiteturas utilizadas. Os retângulos indicam as convoluções e os retângulos arredondados indicam as convoluções transpostas. O tamanho do \textit{kernel} $w$ é indicado na primeira linha do retângulo. A segunda linha informa o número de filtros (canais de saídas). A última linha indica o tamanho (igual nas duas direções) do \textit{stride} utilizado e a função de ativação. A última camada do \textit{decoder} (convolução transposta) de cada um dos modelos é usada para recuperar a informação de cor.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Modelo 1}
-\label{cap3:mod1}
-Este primeiro modelo foi desenvolvido com o objetivo de avaliar o potencial de um \textit{autoencoder} convolucional simples sem camada de gargalo com binarizador/quantizador. Aqui, o armazenamento da imagem codificada pelo \textit{encoder} seria custoso, visto que não há binarização. Portanto, o objetivo é apenas avaliar a distorção das imagens reconstruídas. A arquitetura é ilustrada na~\refFig{conv_ae}.
-\figura[!htb]{conv_ae}{Ilustração do \textit{autoencoder} mais básico desenvolvido}{conv_ae}{width=\textwidth}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Modelo 2}
-\label{cap3:mod2}
-O segundo modelo adiciona o binarizador na camada de gargalo, o que força o \textit{encoder} à comprimir informação visto que será gerada uma saída inteira discreta no conjunto $\{-1, 1\}$ a partir da entrada real contínua. Há uma grande perda de informação em troca de ganho em espaço, pois cada valor pode ser salvo usando apenas um bit agora. Nesta arquitetura~[\refFig{conv_ae_bin}] a taxa \emph{nominal} de bits por pixel é $\dfrac{8\cdot8\cdot128}{32\cdot32} = 8$. 
-\figura[!htb]{conv_ae_bin}{Ilustração do segundo modelo desenvolvido} {conv_ae_bin}{width=\textwidth}
+Do modelo 2 em diante foi usado o \textit{gzip} (codificador de entropia) no latente com o objetivo de reduzir a taxa de bits por pixel.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Modelo 3}
 % \label{cap3:mod3}
-% O terceiro modelo~[\refFig{toderici_model}] segue a arquitetura proposta pelo \textit{Toderici} em~\cite{Variable2016Toderici}. Possui mais camadas em comparação com os outros dois modelos propostos aqui, e uma taxa nominal de $\dfrac{8\cdot8\cdot32}{32\cdot32} = 2$ bits por pixel, visto que é aplicada uma convolução de tamanho 1 por 1 com 32 filtros antes da função de ativação tangente hiperbólica ser aplicada.
+% O terceiro modelo~[\refFig{toderici_model}] segue a arquitetura proposta pelo \textit{Toderici} em~\cite{toderici2016}. Possui mais camadas em comparação com os outros dois modelos propostos aqui, e uma taxa nominal de $\dfrac{8\cdot8\cdot32}{32\cdot32} = 2$ bits por pixel, visto que é aplicada uma convolução de tamanho 1 por 1 com 32 filtros antes da função de ativação tangente hiperbólica ser aplicada.
 % \figura[!htb]{toderici_model}{Ilustração do terceiro modelo desenvolvido}{toderici_model}{width=\textwidth}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bases de Dados}%
+Foram utilizadas, principalmente, cinco bases de dados para o treinamento do modelo proposto. Os conjuntos de testes não foram selecionados pois foram usados para avaliação dos modelos. As bases de dados foram construídas usando as imagens das seguintes bases de dados:
+\begin{enumerate}
+    \item \emph{\acrshort{CLIC}}~\cite{clic}. Desse \textit{dataset} foram pegos 4 conjuntos com os seguintes nomes e tamanhos:
+    \begin{enumerate}
+        \item Professional valid: 41 imagens;
+        \item Professional train: 585 imagens;
+        \item Mobile valid: 61 imagens;
+        \item Mobile train: 1048 imagens;
+    \end{enumerate}
+    \item \emph{\acrshort{DIV2K}}~\cite{div2k}. Desse \textit{dataset} foram pegos 2 conjuntos com os seguintes nomes e tamanhos:
+    \begin{enumerate}
+        \item Train: 800 imagens;
+        \item Valid: 100 imagens;
+    \end{enumerate}
+    \item \emph{\acrshort{EYE}}~\cite{ultra_eye}. Desse \textit{dataset} foram pegos 2 conjuntos com os seguintes nomes e tamanhos:
+    \begin{enumerate}
+        \item HD: 38 imagens;
+        \item UHD: 40 imagens;
+    \end{enumerate}
+\end{enumerate}
+Também foi utilizada a base da Kodak~\cite{kodak} e o conjunto \textit{Mobile test} da base \acrshort{CLIC} para teste. Todas as imagens usadas são de alta qualidade (sem ruído, boa iluminação, alta nitidez) e sem nenhum tipo de compressão, sendo que as imagens \textit{professional} possuem qualidade maior que as {mobile}. A base \acrshort{EYE} consiste de imagens naturais de alta qualidade e resolução adquiridas usando várias câmeras. As imagens cobrem uma quantidade variada de cenas, incluindo cenas ao ar livre e interiores, imagens da natureza, pessoas, animais e cenas históricas retratadas em pinturas. As imagens das bases \acrshort{DIV2K} e \acrshort{EYE} têm resolução maior que as do \acrshort{CLIC}.
+
+Primeiramente, todas as imagens foram separadas em \textit{patches} com 32 pixels de largura e altura, resultando em 6,231,440 \textit{patches}. Assim, foram geradas cinco base de dados com cerca de 1.25 milhões de \textit{patches} em cada uma. Cada imagem foi codificada sem perdas no formato \acrshort{PNG}, e o tamanho de cada arquivo é usado como critério para a entropia do \textit{patch} (\textit{patches} com tamanhos menores são considerados como sendo de ``baixa entropia''). O histograma do tamanho, em bytes, das imagens da base de dados completa é mostrado na~\refFig{hist}.
+\figura[!htb]{hist}{Histograma da base de dados completa formada por 6,231,440 de patches}{hist}{width=\textwidth}
+Foram geradas cinco base de dados com cerca de 1.25 milhões de \textit{patches} em cada uma. Para cada base é pego um subconjunto do total de \textit{patches}.
+
+Cada base de dados tem características específicas e entendê-las é um fator essencial para avaliar o modelo proposto e o impacto de métodos e hiperparâmetros diferentes nos resultados. As bases, nomeadas $BDi,\, i \in \{0,\cdots,4\}$, possuem as seguintes características:
+\begin{itemize}
+    \item \textbf{BD0}: formada por 1,248,978 de \textit{patches} que pertencem ao grupo dos 20\% com menor entropia;
+    \item \textbf{BD1}: formada por 1,251,421 de \textit{patches} que pertencem ao grupo dos que estão na faixa 40\% à 60\% (porcentagem dada de acordo com o \textit{patch} com maior entropia);
+    \item \textbf{BD2}: formada por 1,248,725 de \textit{patches} que pertencem ao grupo dos 20\% com maior entropia;
+    \item \textbf{BD3}: formada por 1,247,033 de \textit{patches} selecionados de forma aleatória. Correspondem à 20\% do total.
+    \item \textbf{BD4}: formada por 1,246,698 de \textit{patches}. 20\% do total retirados aleatoriamente dos 50\% dos \textit{patches} com maior entropia.
+\end{itemize}
+Por construção, não há sobreposição entre as bases de dado 0, 1 e 2, mas existe sobreposição destas bases com as bases 3 e 4. Um histograma de cada base é dado nas~\refFigs{hist_0}{hist_4}.
+\figura[!htb]{hist_0}{Histograma da \textbf{BD0}}{hist_0}{width=\textwidth}
+\figura[!htb]{hist_1}{Histograma da \textbf{BD1}}{hist_1}{width=\textwidth}
+\figura[!htb]{hist_2}{Histograma da \textbf{BD2}}{hist_2}{width=\textwidth}
+\figura[!htb]{hist_3}{Histograma da \textbf{BD3}}{hist_3}{width=\textwidth}
+\figura[!htb]{hist_4}{Histograma da \textbf{BD4}}{hist_4}{width=\textwidth}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
