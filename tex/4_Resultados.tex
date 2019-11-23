@@ -3,7 +3,7 @@ Foram realizados vários experimentos com os modelos apresentados no capítulo a
 \section{JPEG}
 Nesta seção é apresentado o desempenho obtido pelo \textbf{JPEG} nas bases de teste. 
 \label{res:jpeg}
-\tabela{Tabela contendo médias obtidas pelo \textbf{JPEG} em cada uma das bases de teste utilizadas. \textit{Quality} é o argumento usado pelo método conforme explicado }{tab1:jpeg}{|l|l|l|l|l|l|}{\hline
+\tabela{Tabela contendo médias obtidas pelo \textbf{JPEG} em cada uma das bases de teste utilizadas. \textit{Quality} é o argumento usado pelo \textbf{JPEG}, conforme explicado no capítulo 2}{tab1:jpeg}{|l|l|l|l|l|l|}{\hline
 \textbf{Bases}                                                                   & \textbf{Taxa (\acrshort{BPP})} & \textbf{PSNR (dB)} & \textbf{SSIM} & \textbf{MSSIM} & \textbf{Quality} \\ \hline
 \textbf{\begin{tabular}[c]{@{}l@{}}CLIC Mobile test\\ (patches 32)\end{tabular}} & 8            & 44.23         & 0.98          & 0.99           & 94.06            \\ \hline
 \textbf{CLIC Mobile test}                                                        & 2            & 39.58         & 0.96          & 0.99           & 88.69            \\ \hline
@@ -16,7 +16,7 @@ Nesta seção é apresentado o desempenho obtido pelo \textbf{JPEG} nas bases de
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelo 1}
 \label{res:mod1}
-Primeiramente, o Modelo 1~[\refFig{conv_ae}] foi testado em todas as bases de dados usando \textit{learning rate} fixa ($10^-4$) durante todo o treinamento e o otimizador \textit{Adam}. Foi utilizada apenas uma época para treino (equivalente à 50,000 iterações) em todos as avaliações realizadas. Os resultados são apresentados na Tabela~\ref{tab:mod1_bd} e reforçam a afirmação feita em~\cite{toderici2017} em que usar imagens difíceis de comprimir são benéficas para os resultados do modelo. Com esses mesmos hiperparâmetros para treino, foram realizados alguns testes na base de teste (nomeada como \textit{test}) do \acrshort{CLIC}~\cite{clic}. Alguns desses testes também usaram, em adição aos conjuntos de treino montados, os conjuntos de treino (\textit{train}) e validação (\textit{valid}) do \acrshort{CLIC}. Os resultados são apresentados na Tabela~\ref{tab:mod1_clic}.
+Primeiramente, o Modelo 1~[\refFig{conv_ae}] foi testado em todas as bases de dados usando \textit{learning rate} fixa ($10^-4$) durante todo o treinamento e o otimizador \textit{Adam}. Foi utilizada apenas uma época para treino (equivalente à 50,000 iterações) em todos as avaliações realizadas. Os resultados são apresentados na Tabela~\ref{tab:mod1_bd} e reforçam a afirmação feita em~\cite{toderici2017} de que usar imagens difíceis de comprimir (muito conteúdo de alta frequência) são benéficas para os resultados do modelo. Com esses mesmos hiperparâmetros para treino, foram realizados alguns testes na base de teste (nomeada como \textit{test}) do \acrshort{CLIC}~\cite{clic}. Alguns desses testes também usaram, em adição aos conjuntos de treino montados, os conjuntos de treino (\textit{train}) e validação (\textit{valid}) do \acrshort{CLIC}. Os resultados são apresentados na Tabela~\ref{tab:mod1_clic}.
 
 \tabela{Tabela contendo o valor da \acrshort{PSNR}, em decíbeis, dos testes do Modelo 1 com o uso do otimizador \textit{Adam} e \textit{learning rate} fixa. As linhas denotam a base de treino utilizada. As colunas denotam as bases de teste usadas para avaliação do modelo. O índice ``todas'' se refere ao uso de todas as imagens de todas as bases \textbf{BD} para treino}{tab:mod1_bd}{|l|l|l|l|l|l|}{\hline
 \textbf{\begin{tabular}[c]{@{}l@{}}Treino (linhas) x \\Teste (colunas)\end{tabular}} & \textbf{BD0}   & \textbf{BD1}   & \textbf{BD2}   & \textbf{BD3}   & \textbf{BD4}   \\ \hline
@@ -74,11 +74,11 @@ Posteriormente foram realizados alguns testes usando o método de atualização 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelos 2 e 3}
 \label{res:6levels}
-Esses dois modelos foram treinados com 150,000 iterações nas bases \textbf{BD2} e \textbf{BD4}. Os resultados são mostrados nas~\refFigs{_mean_plot_loss_psnr}{_mean_plot_loss_msssim}. Foram feitos alguns testes usando \textit{10-fold cross validation}. A média obtida pelo modelo 2 foi 30.23 dB de \acrshort{PSNR} e 0.86340 de \acrshort{SSIM} à uma taxa de 0.71 bpp. A média obtida pelo modelo 3 obteve 30.31 dB de \acrshort{PSNR} e 0.86498 de \acrshort{SSIM} à uma taxa de 0.71 bpp.
+Esses dois modelos foram treinados com 150,000 iterações nas bases \textbf{BD2} e \textbf{BD4}. Os resultados são mostrados nas~\refFigs{_mean_plot_loss_psnr}{_mean_plot_loss_msssim}. Foram feitos alguns testes usando \textit{10-fold cross validation}. A média obtida pelo modelo 2 foi 30.23 dB de \acrshort{PSNR} e 0.86340 de \acrshort{SSIM} à uma taxa de 0.71 \acrshort{BPP}. A média obtida pelo modelo 3 obteve 30.31 dB de \acrshort{PSNR} e 0.86498 de \acrshort{SSIM} à uma taxa de 0.71 \acrshort{BPP}. Dado esses resultados, é possível observar uma tendência de resultados melhores para o modelo 3, caso fossem feitos testes com mais iterações e níveis de resíduo. 
 
 \figura[!htbp]{_mean_plot_loss_psnr}{Comparação do Modelo 2 e 3 para a métrica \acrshort{MSE}}{_mean_plot_loss_psnr}{width=0.7\textwidth}
 \figura[!htbp]{_mean_plot_loss_ssim}{Comparação do Modelo 2 e 3 para a métrica \acrshort{SSIM}}{_mean_plot_loss_ssim}{width=0.7\textwidth}
-\figura[!htbp]{_mean_plot_loss_msssim}{Comparação do Modelo 3 e 3 para a métrica \acrshort{MS-SSIM}}{_mean_plot_loss_msssim}{width=0.7\textwidth}
+\figura[!htbp]{_mean_plot_loss_msssim}{Comparação do Modelo 2 e 3 para a métrica \acrshort{MS-SSIM}}{_mean_plot_loss_msssim}{width=0.7\textwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelo 4}
 \label{res:mod4}
@@ -133,20 +133,20 @@ Apesar da função de perda utilizada ser a \acrshort{MSE}, o modelo conseguiu o
 \figura[!htbp]{_mean_plot_ssim_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a base Kodak~\cite{kodak}}{_mean_plot_ssim_10levels}{width=0.6\textwidth}
 \figura[!htbp]{_mean_plot_msssim_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a base Kodak~\cite{kodak}}{_mean_plot_msssim_10levels}{width=0.6\textwidth}
 
-Nota-se que para imagens (\refFigs{kodim05}{jason-leem-143987}) com muito conteúdo de alta frequência (muitos detalhes), o modelo se sai melhor para todas as métricas visuais avaliadas. O que era esperado, visto que o JPEG e o JPEG2000 assumem que sinais de alta frequência não importam muito (assumem que maior parte energia da imagem estará contida em coeficientes de baixa frequência) e faz com que os coeficientes de baixa frequência tenham maior precisão ao quantizar.
+Nota-se que para imagens (\refFigs{kodim05}{jason-leem-143987}) com muito conteúdo de alta frequência, o modelo se sai melhor para todas as métricas visuais avaliadas. O que era esperado, visto que o \textbf{JPEG} e o \textbf{JPEG2000} assumem que componentes de alta frequência não importam muito (assumem que maior parte energia da imagem estará contida em coeficientes de baixa frequência) e faz com que os coeficientes de baixa frequência tenham maior precisão ao quantizar.
 
 \figura[!htbp]{kodim05}{Imagem Kodim05~\cite{kodak}}{kodim05}{width=0.7\textwidth}
 \figura[!htbp]{jason-leem-143987}{Imagem jason-leem~\cite{clic}}{jason-leem-143987}{width=0.7\textwidth}
 
-\figura[!htbp]{kodim05_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a Figura~\refFig{kodim05}}{kodim05_plot_psnr}{width=0.6\textwidth}
-\figura[!htbp]{kodim05_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a Figura~\refFig{kodim05}}{kodim05_plot_ssim}{width=0.6\textwidth}
-\figura[!htbp]{kodim05_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a Figura~\refFig{kodim05}}{kodim05_plot_msssim}{width=0.6\textwidth}
+\figura[!htbp]{kodim05_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a~\refFig{kodim05}}{kodim05_plot_psnr}{width=0.6\textwidth}
+\figura[!htbp]{kodim05_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a~\refFig{kodim05}}{kodim05_plot_ssim}{width=0.6\textwidth}
+\figura[!htbp]{kodim05_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a~\refFig{kodim05}}{kodim05_plot_msssim}{width=0.6\textwidth}
 
-\figura[!htbp]{jason-leem-143987_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a Figura~\cite{clic}}{jason-leem-143987_plot_psnr}{width=0.6\textwidth}
-\figura[!htbp]{jason-leem-143987_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a Figura~\cite{clic}}{jason-leem-143987_plot_ssim}{width=0.6\textwidth}
-\figura[!htbp]{jason-leem-143987_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a Figura~\cite{clic}}{jason-leem-143987_plot_msssim}{width=0.6\textwidth}
+\figura[!htbp]{jason-leem-143987_plot_psnr}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para a~\refFig{jason-leem-143987}}{jason-leem-143987_plot_psnr}{width=0.6\textwidth}
+\figura[!htbp]{jason-leem-143987_plot_ssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para a ~\refFig{jason-leem-143987}}{jason-leem-143987_plot_ssim}{width=0.6\textwidth}
+\figura[!htbp]{jason-leem-143987_plot_msssim}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{MS-SSIM} em diferentes taxas para a~\refFig{jason-leem-143987}}{jason-leem-143987_plot_msssim}{width=0.6\textwidth}
 
-Considerando os resultados anteriores obtidos para as imagens kodim05 e kodim09, o Modelo 4 também foi testado em um conjunto de 47 imagens com muito conteúdo de alta frequência retiradas da Kodak~\cite{kodak} e do Clic~\cite{clic}. Os resultados são mostrados nas~\refFigs{_mean_plot_psnr_hf_10levels}{_mean_plot_msssim_hf_10levels} e sumarizados nas~\refTabs{tab:mod4_hf_psnr}{tab:mod4_hf_msssim}. 
+Considerando os resultados anteriores obtidos para as imagens kodim05 e kodim09, o Modelo 4 também foi testado em um conjunto de 47 imagens com muito conteúdo de alta frequência retiradas da Kodak~\cite{kodak} e do Clic~\cite{clic}. Os resultados são mostrados nas~\refFigs{_mean_plot_psnr_hf_10levels}{_mean_plot_msssim_hf_10levels} e sumarizados nas~\refTabs{tab:mod4_hf_psnr}{tab:mod4_hf_msssim}. Esses resultados mostram o que já era esperado: nessas taxas trabalhadas, o Modelo 4 comprime bem melhor do que o \textbf{JPEG} e o \textbf{JPEG2000} para imagens com muito conteúdo de alta frequência.
 
 \figura[!htbp]{_mean_plot_psnr_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{PSNR} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e~\cite{kodak}}{_mean_plot_psnr_hf_10levels}{width=0.6\textwidth}
 \figura[!htbp]{_mean_plot_ssim_hf_10levels}{Comparação do Modelo 4 com o JPEG e JPEG2000 na métrica \acrshort{SSIM} em diferentes taxas para 47 imagens com muito conteúdo de alta frequência retiradas das bases~\cite{clic} e~\cite{kodak}}{_mean_plot_ssim_hf_10levels}{width=0.6\textwidth}
@@ -183,28 +183,28 @@ Considerando os resultados anteriores obtidos para as imagens kodim05 e kodim09,
 \tabela{Tabela contendo os valores da taxa (\acrshort{BPP}) e \acrshort{MS-SSIM} do Modelo 4, JPEG e JPEG2000 para 47 imagens da base~\cite{kodak} e~\cite{clic} com muito conteúdo de alta frequência}{tab:mod4_hf_msssim}{|c |c c |c c|c c| c c| }{\cline{2-9}
 \multicolumn{1}{c}{} & \multicolumn{2}{|c|}{Modelo 4} & \multicolumn{2}{c|}{Modelo 4 + GZIP} & \multicolumn{2}{c|}{JPEG} &\multicolumn{2}{c|}{JPEG 2000} \\ \hline
 \textbf{Nível} & Taxa & MS & Taxa & MS & Taxa & MS & Taxa & MS \\ \hline	
-\textbf{1}     & 0.10 & 0.84156     & 0.10 & 0.84156      & 0.17 & 0.72882   & 0.10 & 0.87953     \\ 
-\textbf{2}     & 0.21 & 0.92131     & 0.21 & 0.92131      & 0.22 & 0.82462   & 0.21 & 0.92713     \\ 
-\textbf{3}     & 0.34 & 0.94802     & 0.34 & 0.94802      & 0.34 & 0.90454   & 0.33 & 0.94699     \\ 
-\textbf{4}     & 0.46 & 0.96112     & 0.46 & 0.96112      & 0.46 & 0.93426   & 0.46 & 0.95877     \\ 
-\textbf{5}     & 0.59 & 0.96897     & 0.59 & 0.96897      & 0.59 & 0.95006   & 0.58 & 0.96628     \\ 
-\textbf{6}     & 0.71 & 0.97408     & 0.71 & 0.97408      & 0.71 & 0.96010   & 0.71 & 0.97148     \\ 
-\textbf{7}     & 0.84 & 0.97806     & 0.84 & 0.97806      & 0.84 & 0.96655   & 0.83 & 0.97552     \\ 
-\textbf{8}     & 0.96 & 0.98088     & 0.96 & 0.98088      & 0.96 & 0.97134   & 0.95 & 0.97863     \\ 
-\textbf{9}     & 1.09 & 0.98315     & 1.09 & 0.98315      & 1.10 & 0.97483   & 1.08 & 0.98151     \\ 
-\textbf{10}    & 1.20 & 0.98477     & 1.20 & \textbf{0.98477}      & 1.21 & 0.97746   & 1.20 & 0.98356 \\ \hline}
+\textbf{1}     & 0.125 & 0.84156     & 0.10 & 0.84156      & 0.17 & 0.72882   & 0.10 & 0.87953     \\ 
+\textbf{2}     & 0.250 & 0.92131     & 0.21 & 0.92131      & 0.22 & 0.82462   & 0.21 & 0.92713     \\ 
+\textbf{3}     & 0.375 & 0.94802     & 0.34 & 0.94802      & 0.34 & 0.90454   & 0.33 & 0.94699     \\ 
+\textbf{4}     & 0.500 & 0.96112     & 0.46 & 0.96112      & 0.46 & 0.93426   & 0.46 & 0.95877     \\ 
+\textbf{5}     & 0.625 & 0.96897     & 0.59 & 0.96897      & 0.59 & 0.95006   & 0.58 & 0.96628     \\ 
+\textbf{6}     & 0.750 & 0.97408     & 0.71 & 0.97408      & 0.71 & 0.96010   & 0.71 & 0.97148     \\ 
+\textbf{7}     & 0.875 & 0.97806     & 0.84 & 0.97806      & 0.84 & 0.96655   & 0.83 & 0.97552     \\ 
+\textbf{8}     & 1.000 & 0.98088     & 0.96 & 0.98088      & 0.96 & 0.97134   & 0.95 & 0.97863     \\ 
+\textbf{9}     & 1.125 & 0.98315     & 1.09 & 0.98315      & 1.10 & 0.97483   & 1.08 & 0.98151     \\ 
+\textbf{10}    & 1.250 & 0.98477     & 1.20 & \textbf{0.98477}      & 1.21 & 0.97746   & 1.20 & 0.98356 \\ \hline}
 
 Pelas~\refFigs{kodim05_3_net}{kodim05_3_jpeg2k} é possível notar o que as~\refFigs{kodim05_plot_psnr}{kodim05_plot_msssim} já haviam mostrado: a reconstrução do Modelo 4 é visualmente superior para a~\refFig{kodim05} quando comparada com o \textbf{JPEG} e \textbf{JPEG2000}, mesmo com uma taxa menor. Essa taxa corresponde ao quarto nível de resíduo para o Modelo 4.
 
-\figura[!htbp]{kodim05_3_net}{Imagem~\refFig{kodim05} reconstruída pelo Modelo 4 à uma taxa de 0.47 bits por pixel.}{kodim05_3_net}{width=0.7\textwidth}
-\figura[!htbp]{kodim05_3_jpeg}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG} à uma taxa de 0.50 bits por pixel.}{kodim05_3_jpeg}{width=0.7\textwidth}
-\figura[!htbp]{kodim05_3_jpeg2k}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG2000} à uma taxa de 0.50 bits por pixel}{kodim05_3_jpeg2k}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_3_net}{~\refFig{kodim05} reconstruída pelo Modelo 4 à uma taxa de 0.47 bits por pixel}{kodim05_3_net}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_3_jpeg}{~\refFig{kodim05} reconstruída pelo \textbf{JPEG} à uma taxa de 0.50 bits por pixel}{kodim05_3_jpeg}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_3_jpeg2k}{~\refFig{kodim05} reconstruída pelo \textbf{JPEG2000} à uma taxa de 0.50 bits por pixel}{kodim05_3_jpeg2k}{width=0.7\textwidth}
 
-Para taxas muito baixas é possível notar uma grande dificuldade do \textbf{JPEG} em comprimir para a~\refFig{kodim05} mesmo com uma taxa maior, conforme mostra as~\refFigs{kodim05_0_net}{kodim05_0_jpeg2k}. Essa taxa corresponde ao primeiro nível de resíduo para o Modelo 4.
+Para taxas muito baixas é possível notar uma grande dificuldade do \textbf{JPEG} (\textbf{JPEG2000} e o Modelo 4 lidam bem melhor com taxas mais baixas) em comprimir para a~\refFig{kodim05} mesmo com uma taxa maior (não é possível ser menor devido a limitação do parâmetro \textit{quality}), conforme mostra as~\refFigs{kodim05_0_net}{kodim05_0_jpeg2k}. Essa taxa corresponde ao primeiro nível de resíduo para o Modelo 4.
 
-\figura[!htbp]{kodim05_0_net}{Imagem~\refFig{kodim05} reconstruída pelo Modelo 4 à uma taxa de 0.12 bits por pixel}{kodim05_0_net}{width=0.7\textwidth}
-\figura[!htbp]{kodim05_0_jpeg}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG} à uma taxa de 0.21 bits por pixel.}{kodim05_0_jpeg}{width=0.7\textwidth}
-\figura[!htbp]{kodim05_0_jpeg2k}{Imagem~\refFig{kodim05} reconstruída pelo \textbf{JPEG2000} à uma taxa de 0.12 bits por pixel}{kodim05_0_jpeg2k}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_0_net}{~\refFig{kodim05} reconstruída pelo Modelo 4 à uma taxa de 0.12 bits por pixel}{kodim05_0_net}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_0_jpeg}{~\refFig{kodim05} reconstruída pelo \textbf{JPEG} à uma taxa de 0.21 bits por pixel.}{kodim05_0_jpeg}{width=0.7\textwidth}
+\figura[!htbp]{kodim05_0_jpeg2k}{~\refFig{kodim05} reconstruída pelo \textbf{JPEG2000} à uma taxa de 0.12 bits por pixel}{kodim05_0_jpeg2k}{width=0.7\textwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Comparar ganhos obtidos pelo GZIP nos modelos com diferentes funções de loss 
@@ -214,7 +214,7 @@ Nas seguintes subseções será analisado o ganho na taxa obtido ao usar o codif
 \subsection{Modelo 4}
 A~\refFig{gain_gzip_mod4} mostra o ganho percentual médio por nível do Modelo 4~[\ref{res:mod4}] para a base da Kodak~\cite{kodak}. Nota-se um decaímento exponencial no ganho conforme o nível de resíduo aumenta. Considerando o funcionamento do modelo com resíduos, isso sugere uma especialização e robustez cada vez maior nos \textit{encoders} dos níveis mais superiores ao explorar estruturas dos dados e comprimir informação nos latentes. Assim, os \textit{bitstreams} gerados a partir dos latentes se tornam cada vez mais complexos (os resíduos possuirão muita variância nos valores) e com menos redundâncias fazendo com que o \textit{gzip} não consiga explorar redundâncias bem ou que não haja muitas redundâncias. 
 
-Isto acontece na maior parte das imagens, principalmente nas que possui muito conteúdo de alta frequência e onde há muita informação que, consequentemente, geram latentes muito complexos, o que faz com que os \textit{bitstreams} contenham muita informação já que os resíduos dos \textit{patches} contém muita informação e geram muitas ativações no modelo.
+Isto acontece na maior parte das imagens, principalmente nas que possui muito conteúdo de alta frequência e onde há muito conteúdo que, consequentemente, geram latentes muito complexos, o que faz com que os \textit{bitstreams} contenham muito conteúdo já que os resíduos dos \textit{patches} contém muito conteúdo e geram muitas ativações no modelo.
 
 \figura[!htbp]{gain_gzip_mod4}{Ganho percentual médio na taxa por nível de resíduo ao usar o codificador de entropia \textit{gzip} nos \textit{bitstreams} de cada nível para a base Kodak~\cite{kodak}}{gain_gzip_mod4}{width=\textwidth}
 % \figura[!htbp]{gain_gzip_mod4_hf}{Ganho percentual médio na taxa por nível ao usar o codificador de entropia \textit{gzip} nos \textit{bitstreams} de cada nível para 47 imagens com muito conteúdo de alta frequência da base Kodak~\cite{kodak} e~\cite{clic}}{gain_gzip_mod4_hf}{width=\textwidth}

@@ -9,15 +9,15 @@ Modelos baseados em redes neurais para compressão de imagens precisam de muitas
 \label{sec:analise}
 As seguintes conclusões relacionadas as hipóteses~\ref{sec:hipotese} podem ser tomadas:
 \begin{itemize}
-    \item É possível notar que os modelos baseados em redes neurais são melhores do que os codecs clássicos para comprimir imagens com alto conteúdo de alta frequência, visto que o Modelo 4 foi capaz de superar o \textbf{JPEG} e o \textbf{JPEG2000} para 47 imagens com muito conteúdo de alta frequência retiradas das bases Kodak~\cite{kodak} e CLIC~\cite{clic} nas métricas \acrshort{SSIM} e \acrshort{MS-SSIM}, além de ter superado o \acrshort{JPEG} na métrica \acrshort{PSNR}.
-    \item É possível concluir que o \textit{GZIP} não está comprimindo muito após a primeira iteração. Portanto, seria necessário desenvolver um codificador de entropia específico para esta tarefa ou alterar a      arquitetura do modelo para tentar fazer com que os latentes binarizados sejam mais adequados para o codificador.
-    \item Há um impacto significativo nos resultados ao usar imagens com alto conteúdo de alta frequência para treino dos modelos, conforme mostrado no capítulo anterior. 
-    \item É possível notar um impacto razoável em diferentes aspectos com o uso de diferentes funções de custo, o que abre um espaço de exploração interessante para ser avaliado.
+    \item É possível notar que os modelos baseados em redes neurais são melhores do que os codecs clássicos para comprimir imagens com muito conteúdo de alta frequência em baixas taxas, conforme o esperado, visto que o Modelo 4 foi capaz de superar o \textbf{JPEG} e o \textbf{JPEG2000} para 47 imagens com muito conteúdo de alta frequência retiradas das bases Kodak~\cite{kodak} e CLIC~\cite{clic} nas métricas \acrshort{SSIM} e \acrshort{MS-SSIM}, além de ter superado o \acrshort{JPEG} na métrica \acrshort{PSNR} para essa base e para a base Kodak~\cite{kodak}.
+    \item É possível concluir que o \textit{GZIP} não está comprimindo muito após a primeira iteração. Portanto, seria necessário desenvolver um codificador de entropia específico para esta tarefa ou alterar a arquitetura do modelo para tentar fazer com que os latentes binarizados sejam mais adequados para o codificador.
+    \item Há um impacto significativo nos resultados ao usar imagens com muito conteúdo de alta frequência para treino dos modelos, conforme mostrado no capítulo anterior. 
+    \item É possível notar um impacto razoável nos resultados com o uso de diferentes funções de custo, o que abre um espaço de exploração interessante para ser avaliado e explorado.
     \item Os modelos apresentados nesse trabalhos são flexíveis e podem ser facilmente aplicados em vídeos.
     \item Utiliza-se a mesma quantidade de bits para os mais diversos \textit{patches}, o que não é uma boa abordagem do ponto de vista de compressão visto que seria possível utilizar menos bits para \textit{patches} mais fáceis e mais bits para \textit{patches} mais difíceis. Seria interessante fazer com que o modelo fosse capaz de realizar uma alocação dinâmica de bits.
 \end{itemize}
 
-Ainda há muito espaço para novas soluções no problema abordado com vários desafios interessantes a serem enfrentados.
+Todos os objetivos traçados foram atingidos e todas as questões levantadas nas hipóteses foram respondidas, entretanto ainda há muito espaço para novas soluções no problema abordado com vários desafios interessantes a serem enfrentados.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section{Trabalhos Futuros}
 % \label{sec:futuro}
